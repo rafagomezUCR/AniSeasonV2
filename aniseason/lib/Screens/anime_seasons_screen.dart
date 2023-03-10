@@ -65,7 +65,7 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           TextButton(onPressed: () {}, child: Text('Submit')),
         ],
       ),
