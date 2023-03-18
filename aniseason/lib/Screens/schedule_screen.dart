@@ -14,7 +14,9 @@ class AnimeSchedule extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.ten,
-          title: const Center(child: Text("SCHEDULE")),
+          title: Text("SCHEDULE"),
+          toolbarHeight: 50,
+          centerTitle: true,
           bottom: TabBar(
             indicatorColor: AppColors.ten,
             tabs: [
