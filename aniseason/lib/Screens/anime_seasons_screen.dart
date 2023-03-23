@@ -16,13 +16,47 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
 
   String? selectedSeason;
 
+  List<DropdownMenuItem<String>> _DividedMenuItemList(List<String> items) {
+    List<DropdownMenuItem<String>> menuItems = [];
+    for (var item in items) {
+      menuItems.addAll(
+        [
+          DropdownMenuItem<String>(
+            value: item,
+            child: Text(item),
+          ),
+          if (item != items.last)
+            DropdownMenuItem<String>(
+              enabled: false,
+              child: Divider(
+                color: AppColors.ten,
+              ),
+            ),
+        ],
+      );
+    }
+    return menuItems;
+  }
+
+  List<double> _customMenuItemHeights() {
+    List<double> itemHeights = [];
+    for (var i = 0; i < (seasonlist.length * 2) - 1; ++i) {
+      if (i % 2 == 0) {
+        itemHeights.add(40);
+      } else {
+        itemHeights.add(4);
+      }
+    }
+    return itemHeights;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text("ANIME SEASONS"),
+        title: const Text("ANIME SEASONS"),
         centerTitle: true,
         toolbarHeight: 100,
         backgroundColor: AppColors.ten,
@@ -40,35 +74,50 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
                   child: DropdownButton2(
                     // changes backgroundcolor when picking item
                     //barrierColor: AppColors.ten,
-                    buttonDecoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                    hint: const Text("Select Season"),
+                    buttonDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.lightText),
+                      color: AppColors.ten,
+                    ),
+                    iconEnabledColor: Colors.white,
+                    hint: const Text(
+                      "Select Season",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    customItemsHeights: _customMenuItemHeights(),
                     onChanged: (value) => {},
-                    items: seasonlist
-                        .map<DropdownMenuItem<String>>(
-                          (String item) => DropdownMenuItem(
-                            value: item,
-                            child: Text(item),
-                          ),
-                        )
-                        .toList(),
+                    items: _DividedMenuItemList(seasonlist),
                   ),
                 ),
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
-                    // changes backgroundcolor when picking item
-                    //barrierColor: AppColors.ten,
-                    hint: const Text("Select Year"),
-                    onChanged: (value) => {},
-                    items: seasonlist
-                        .map<DropdownMenuItem<String>>(
-                          (String item) => DropdownMenuItem(
-                            value: item,
-                            child: Text(item),
-                          ),
-                        )
-                        .toList(),
-                  ),
+                      // changes backgroundcolor when picking item
+                      //barrierColor: AppColors.ten,
+                      buttonDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: AppColors.lightText),
+                        color: AppColors.ten,
+                      ),
+                      iconEnabledColor: Colors.white,
+                      hint: const Text(
+                        "Select Year",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      customItemsHeights: _customMenuItemHeights(),
+                      onChanged: (value) => {},
+                      items: _DividedMenuItemList(seasonlist)),
                 ),
               ],
             ),
