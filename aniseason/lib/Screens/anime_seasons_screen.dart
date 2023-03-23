@@ -12,7 +12,11 @@ class AnimeSeasons extends StatefulWidget {
 }
 
 class _AnimeSeasonsState extends State<AnimeSeasons> {
-  final List<String> seasonlist = ['Spring', 'Summer', 'Fall', 'Winter'];
+  final List<String> _seasonList = ['Spring', 'Summer', 'Fall', 'Winter'];
+  final List<String> _yearsList = List.generate(
+    DateTime.now().year - 1980 + 1,
+    (index) => (DateTime.now().year - index).toString(),
+  );
 
   String? selectedSeason;
 
@@ -38,9 +42,9 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
     return menuItems;
   }
 
-  List<double> _customMenuItemHeights() {
+  List<double> _customMenuItemHeights(List<String> items) {
     List<double> itemHeights = [];
-    for (var i = 0; i < (seasonlist.length * 2) - 1; ++i) {
+    for (var i = 0; i < (items.length * 2) - 1; ++i) {
       if (i % 2 == 0) {
         itemHeights.add(40);
       } else {
@@ -72,8 +76,6 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
               children: [
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
-                    // changes backgroundcolor when picking item
-                    //barrierColor: AppColors.ten,
                     buttonDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: AppColors.lightText),
@@ -90,34 +92,34 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    customItemsHeights: _customMenuItemHeights(),
+                    customItemsHeights: _customMenuItemHeights(_seasonList),
                     onChanged: (value) => {},
-                    items: _DividedMenuItemList(seasonlist),
+                    items: _DividedMenuItemList(_seasonList),
                   ),
                 ),
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
-                      // changes backgroundcolor when picking item
-                      //barrierColor: AppColors.ten,
-                      buttonDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.lightText),
-                        color: AppColors.ten,
+                    buttonDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.lightText),
+                      color: AppColors.ten,
+                    ),
+                    dropdownMaxHeight: 200,
+                    iconEnabledColor: Colors.white,
+                    hint: const Text(
+                      "Select Year",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
-                      iconEnabledColor: Colors.white,
-                      hint: const Text(
-                        "Select Year",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      customItemsHeights: _customMenuItemHeights(),
-                      onChanged: (value) => {},
-                      items: _DividedMenuItemList(seasonlist)),
+                    ),
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    customItemsHeights: _customMenuItemHeights(_yearsList),
+                    onChanged: (value) => {},
+                    items: _DividedMenuItemList(_yearsList),
+                  ),
                 ),
               ],
             ),
