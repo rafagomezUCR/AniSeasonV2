@@ -58,6 +58,7 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("ANIME SEASONS"),
@@ -124,22 +125,60 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
               ],
             ),
             const SizedBox(height: 20),
-            OutlinedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(AppColors.ten),
-                overlayColor: MaterialStateProperty.resolveWith(
-                  (states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return AppColors.thirty;
-                    }
-                    return null;
-                  },
+            TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(
+                backgroundColor: AppColors.ten,
+                padding: EdgeInsets.all(15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              onPressed: () {},
               child: const Text(
                 'Submit',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Flexible(
+              child: GridView.count(
+                crossAxisCount: 2,
+                children: [
+                  Card(
+                    child: Text("Card1"),
+                  ),
+                  Card(
+                    child: Text("Card2"),
+                  ),
+                  Card(
+                    child: Text("Card3"),
+                  ),
+                  Card(
+                    child: Text("Card4"),
+                  ),
+                  Card(
+                    child: Text("Card5"),
+                  ),
+                  Card(
+                    child: Text("Card6"),
+                  ),
+                  Card(
+                    child: Text("Card7"),
+                  ),
+                  Card(
+                    child: Text("Card8"),
+                  ),
+                  Card(
+                    child: Text("Card9"),
+                  ),
+                  Card(
+                    child: Text("Card10"),
+                  ),
+                ],
               ),
             ),
           ],
