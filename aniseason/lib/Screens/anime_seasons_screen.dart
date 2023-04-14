@@ -20,7 +20,7 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
 
   String? selectedSeason;
 
-  List<DropdownMenuItem<String>> _DividedMenuItemList(List<String> items) {
+  List<DropdownMenuItem<String>> _dividedMenuItemList(List<String> items) {
     List<DropdownMenuItem<String>> menuItems = [];
     for (var item in items) {
       menuItems.addAll(
@@ -94,7 +94,7 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
                     ),
                     customItemsHeights: _customMenuItemHeights(_seasonList),
                     onChanged: (value) => {},
-                    items: _DividedMenuItemList(_seasonList),
+                    items: _dividedMenuItemList(_seasonList),
                   ),
                 ),
                 DropdownButtonHideUnderline(
@@ -118,13 +118,30 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
                     ),
                     customItemsHeights: _customMenuItemHeights(_yearsList),
                     onChanged: (value) => {},
-                    items: _DividedMenuItemList(_yearsList),
+                    items: _dividedMenuItemList(_yearsList),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 20),
-            TextButton(onPressed: () {}, child: Text('Submit')),
+            OutlinedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(AppColors.ten),
+                overlayColor: MaterialStateProperty.resolveWith(
+                  (states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return AppColors.thirty;
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              onPressed: () {},
+              child: const Text(
+                'Submit',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),
