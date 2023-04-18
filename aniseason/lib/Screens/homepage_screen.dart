@@ -3,6 +3,7 @@ import 'package:aniseason/Widgets/scrollable_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:aniseason/Styles/appcolors.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatelessWidget {
@@ -57,17 +58,24 @@ class HomePage extends StatelessWidget {
                         items: [1, 2, 3, 4, 5].map((i) {
                           return Builder(
                             builder: (BuildContext context) {
-                              return Container(
+                              return GestureDetector(
+                                onTap: () {
+                                  context.push('/animeInfo');
+                                },
+                                child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 5.0),
                                   decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20)),
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
                                   child: Text(
                                     'text $i',
                                     style: const TextStyle(fontSize: 16.0),
-                                  ));
+                                  ),
+                                ),
+                              );
                             },
                           );
                         }).toList(),
