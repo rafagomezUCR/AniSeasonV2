@@ -10,16 +10,31 @@ class AnimeInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Anime Info"),
-            FloatingActionButton(
-              onPressed: () {
-                context.pop();
-              },
-              child: Text("return"),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    onPressed: () {
+                      context.pop();
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text("Anime Details"),
+                ),
+              ],
             ),
+            Text("Anime Info"),
           ],
         ),
       ),

@@ -129,6 +129,7 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
               onPressed: () {},
               style: TextButton.styleFrom(
                 backgroundColor: AppColors.ten,
+                foregroundColor: Colors.black,
                 padding: EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
