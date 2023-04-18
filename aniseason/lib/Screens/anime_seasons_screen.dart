@@ -1,4 +1,5 @@
 import 'package:aniseason/Styles/appcolors.dart';
+import 'package:aniseason/Widgets/seasonal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -149,36 +150,16 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
               child: GridView.count(
                 crossAxisCount: 2,
                 children: [
-                  Card(
-                    child: Text("Card1"),
-                  ),
-                  Card(
-                    child: Text("Card2"),
-                  ),
-                  Card(
-                    child: Text("Card3"),
-                  ),
-                  Card(
-                    child: Text("Card4"),
-                  ),
-                  Card(
-                    child: Text("Card5"),
-                  ),
-                  Card(
-                    child: Text("Card6"),
-                  ),
-                  Card(
-                    child: Text("Card7"),
-                  ),
-                  Card(
-                    child: Text("Card8"),
-                  ),
-                  Card(
-                    child: Text("Card9"),
-                  ),
-                  Card(
-                    child: Text("Card10"),
-                  ),
+                  SeasonalCard(),
+                  SeasonalCard(),
+                  SeasonalCard(),
+                  SeasonalCard(),
+                  SeasonalCard(),
+                  SeasonalCard(),
+                  SeasonalCard(),
+                  SeasonalCard(),
+                  SeasonalCard(),
+                  SeasonalCard(),
                 ],
               ),
             ),
