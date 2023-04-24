@@ -35,4 +35,26 @@ class JikanAPIService {
       throw Exception(response.reasonPhrase);
     }
   }
+
+  Future<List<AnimeModel>> getSchedule(String day) async {
+    Response response =
+        await get(Uri.parse('${endpoint}schedules?filter=$day&sfw=true'));
+    if (response.statusCode == 200) {
+      final List result = jsonDecode(response.body)['data'];
+      return result.map((e) => AnimeModel.fromJson(e)).toList();
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+  Future<List<AnimeModel>> getSeason(String season, String year) async {
+    Response response =
+        await get(Uri.parse('${endpoint}seasons/$season/$year'));
+    if (response.statusCode == 200) {
+      final List result = jsonDecode(response.body)['data'];
+      return result.map((e) => AnimeModel.fromJson(e)).toList();
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
 }
