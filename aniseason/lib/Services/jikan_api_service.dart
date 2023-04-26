@@ -36,7 +36,7 @@ class JikanAPIService {
     }
   }
 
-  Future<List<AnimeModel>> getSeasonNow() async {
+  Future<List<AnimeModel>> getCurrentSeason() async {
     Response response = await get(Uri.parse('${endpoint}seasons/now'));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body)['data'];
