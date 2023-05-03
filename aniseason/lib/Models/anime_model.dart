@@ -13,8 +13,7 @@ class AnimeModel {
   final int episodes;
   final String status;
   final bool airing;
-  final String airedFrom;
-  final String airedTo;
+  final String aired;
   final String duration;
   final String rating;
   final double score;
@@ -23,7 +22,7 @@ class AnimeModel {
   final String synopsis;
   final String season;
   final int year;
-  final List<Map<String, String>> streaming;
+  final List<String> streaming;
 
   AnimeModel({
     required this.malId,
@@ -40,8 +39,7 @@ class AnimeModel {
     required this.episodes,
     required this.status,
     required this.airing,
-    required this.airedFrom,
-    required this.airedTo,
+    required this.aired,
     required this.duration,
     required this.rating,
     required this.score,
@@ -54,32 +52,37 @@ class AnimeModel {
   });
 
   factory AnimeModel.fromJson(Map<String, dynamic> json) {
+    double score;
+    if (json['score'] != null) {
+      score = json['score'].toDouble();
+    } else {
+      score = 0.0;
+    }
     return AnimeModel(
-      malId: json['mal_id'],
-      url: json['url'],
-      imageUrl: json['images']['jpg']['image_url'],
-      smallImageUrl: json['images']['jpg']['small_image_url'],
-      largeImageUrl: json['images']['jpg']['large_image_url'],
-      trailerUrl: json['trailer']['url'],
-      title: json['title'],
-      titleEnglish: json['title_english'],
-      titleJapanese: json['title_japanese'],
-      type: json['type'],
-      source: json['source'],
-      episodes: json['episode'],
-      status: json['status'],
-      airing: json['airing'],
-      airedFrom: json['aired']['from'],
-      airedTo: json['aired']['to'],
-      duration: json['duration'],
-      rating: json['rating'],
-      score: json['score'],
-      scoredBy: json['scored_by'],
-      rank: json['rank'],
-      synopsis: json['synopsis'],
-      season: json['season'],
-      year: json['year'],
-      streaming: json['streaming'],
+      malId: json['mal_id'] ??= '',
+      url: json['url'] ??= '',
+      imageUrl: json['images']['jpg']['image_url'] ??= '',
+      smallImageUrl: json['images']['jpg']['small_image_url'] ??= '',
+      largeImageUrl: json['images']['jpg']['large_image_url'] ??= '',
+      trailerUrl: json['trailer']['url'] ??= '',
+      title: json['title'] ??= '',
+      titleEnglish: json['title_english'] ??= '',
+      titleJapanese: json['title_japanese'] ??= '',
+      type: json['type'] ??= '',
+      source: json['source'] ??= '',
+      episodes: json['episodes'] ??= 0,
+      status: json['status'] ??= '',
+      airing: json['airing'] ??= false,
+      aired: json['aired']['string'] ??= '',
+      duration: json['duration'] ??= '',
+      rating: json['rating'] ??= '',
+      score: score,
+      scoredBy: json['scored_by'] ??= 0,
+      rank: json['rank'] ??= 0,
+      synopsis: json['synopsis'] ??= '',
+      season: json['season'] ??= '',
+      year: json['year'] ??= 0,
+      streaming: json['streaming'] ??= <String>[],
     );
   }
 }

@@ -1,19 +1,28 @@
+import 'package:aniseason/Provider/api_service_provider.dart';
 import 'package:aniseason/Widgets/bottom_nav_bar.dart';
+import 'package:aniseason/Widgets/homepage_widgets.dart';
 import 'package:aniseason/Widgets/scrollable_card.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:aniseason/Styles/appcolors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'dart:ui' as ui;
 
-class HomePage extends StatelessWidget {
+import '../Models/anime_model.dart';
+
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-
+    final topAnime = ref.watch(getTopAnimeProvider);
+    final currentSeason = ref.watch(getCurrentSeasonProvider);
+    final upcomingSeason = ref.watch(getUpcomingSeasonProvider);
     return Scaffold(
       body: Container(
         margin: EdgeInsets.fromLTRB(
@@ -46,7 +55,8 @@ class HomePage extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(top: 20),
-                      child: CarouselSlider(
+                      child: CarouselSlider.builder(
+                        itemCount: 5,
                         options: CarouselOptions(
                           height: screenHeight * 0.3,
                           autoPlay: true,
@@ -55,72 +65,127 @@ class HomePage extends StatelessWidget {
                               const Duration(milliseconds: 500),
                           enlargeCenterPage: true,
                         ),
-                        items: [1, 2, 3, 4, 5].map((i) {
-                          return Builder(
-                            builder: (BuildContext context) {
+                        itemBuilder: (context, index, realIndex) {
+                          return topAnime.when(
+                            data: (animeData) {
+                              List<AnimeModel> topAnimeList =
+                                  animeData.map((e) => e).toList();
                               return GestureDetector(
                                 onTap: () {
                                   context.push('/animeInfo');
                                 },
                                 child: Container(
-                                  width: MediaQuery.of(context).size.width,
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 5.0),
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
                                     borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(
-                                    'text $i',
-                                    style: const TextStyle(fontSize: 16.0),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          topAnimeList[index].largeImageUrl),
+                                    ),
                                   ),
                                 ),
                               );
                             },
+                            error: (err, stackTrace) {
+                              return Center(
+                                child: Text(err.toString()),
+                              );
+                            },
+                            loading: () {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
                           );
-                        }).toList(),
+                        },
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 20),
                       child: SizedBox(
                         height: 200,
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) => const SizedBox(
-                            width: 10,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) =>
-                              const ScrollableCard(),
+                        child: topAnime.when(
+                          data: (animeData) {
+                            List<AnimeModel> animeList =
+                                animeData.map((e) => e).toList();
+                            return ListView.separated(
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(width: 10);
+                              },
+                              itemCount: animeList.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return ScrollableCard(
+                                    context, animeList[index].largeImageUrl);
+                              },
+                            );
+                          },
+                          error: (err, stack) {
+                            Center(child: Text(err.toString()));
+                          },
+                          loading: () {
+                            const Center(child: CircularProgressIndicator());
+                          },
                         ),
                       ),
                     ),
                     Container(
+                      margin: const EdgeInsets.only(top: 20),
                       child: SizedBox(
                         height: 200,
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) => const SizedBox(
-                            width: 10,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) =>
-                              const ScrollableCard(),
+                        child: currentSeason.when(
+                          data: (animeData) {
+                            List<AnimeModel> animeList =
+                                animeData.map((e) => e).toList();
+                            return ListView.separated(
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(width: 10);
+                              },
+                              itemCount: animeList.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return ScrollableCard(
+                                    context, animeList[index].largeImageUrl);
+                              },
+                            );
+                          },
+                          error: (err, stack) {
+                            Center(child: Text(err.toString()));
+                          },
+                          loading: () {
+                            const Center(child: CircularProgressIndicator());
+                          },
                         ),
                       ),
                     ),
                     Container(
+                      margin: const EdgeInsets.only(top: 20),
                       child: SizedBox(
                         height: 200,
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) => const SizedBox(
-                            width: 10,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) =>
-                              const ScrollableCard(),
+                        child: upcomingSeason.when(
+                          data: (animeData) {
+                            List<AnimeModel> animeList =
+                                animeData.map((e) => e).toList();
+                            return ListView.separated(
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(width: 10);
+                              },
+                              itemCount: animeList.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return ScrollableCard(
+                                    context, animeList[index].largeImageUrl);
+                              },
+                            );
+                          },
+                          error: (err, stack) {
+                            Center(child: Text(err.toString()));
+                          },
+                          loading: () {
+                            const Center(child: CircularProgressIndicator());
+                          },
                         ),
                       ),
                     ),

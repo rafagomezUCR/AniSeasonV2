@@ -1,18 +1,14 @@
+import 'package:aniseason/Provider/api_service_provider.dart';
 import 'package:aniseason/Styles/appcolors.dart';
 import 'package:aniseason/Widgets/seasonal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AnimeSeasons extends StatefulWidget {
+class AnimeSeasons extends ConsumerWidget {
   AnimeSeasons({super.key});
-
-  @override
-  State<AnimeSeasons> createState() => _AnimeSeasonsState();
-}
-
-class _AnimeSeasonsState extends State<AnimeSeasons> {
   final List<String> _seasonList = ['Spring', 'Summer', 'Fall', 'Winter'];
   final List<String> _yearsList = List.generate(
     DateTime.now().year - 1980 + 1,
@@ -56,9 +52,10 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    final animeSeason = ref.watch(getSeasonProvider(['summer', '2010']));
 
     return Scaffold(
       appBar: AppBar(
@@ -67,104 +64,114 @@ class _AnimeSeasonsState extends State<AnimeSeasons> {
         toolbarHeight: 100,
         backgroundColor: AppColors.ten,
       ),
-      body: Container(
-        margin:
-            EdgeInsets.fromLTRB(screenWidth * 0.05, 10, screenWidth * 0.05, 0),
-        alignment: Alignment.topCenter,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: animeSeason.when(
+        data: (animeData) {
+          Container(
+            margin: EdgeInsets.fromLTRB(
+                screenWidth * 0.05, 10, screenWidth * 0.05, 0),
+            alignment: Alignment.topCenter,
+            child: Column(
               children: [
-                DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    buttonDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.lightText),
-                      color: AppColors.ten,
-                    ),
-                    iconEnabledColor: Colors.white,
-                    hint: const Text(
-                      "Select Season",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: AppColors.lightText),
+                          color: AppColors.ten,
+                        ),
+                        iconEnabledColor: Colors.white,
+                        hint: const Text(
+                          "Select Season",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        customItemsHeights: _customMenuItemHeights(_seasonList),
+                        onChanged: (value) => {},
+                        items: _dividedMenuItemList(_seasonList),
                       ),
                     ),
-                    dropdownDecoration: BoxDecoration(
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        buttonDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: AppColors.lightText),
+                          color: AppColors.ten,
+                        ),
+                        dropdownMaxHeight: 200,
+                        iconEnabledColor: Colors.white,
+                        hint: const Text(
+                          "Select Year",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        dropdownDecoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        customItemsHeights: _customMenuItemHeights(_yearsList),
+                        onChanged: (value) => {},
+                        items: _dividedMenuItemList(_yearsList),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.ten,
+                    foregroundColor: Colors.black,
+                    padding: EdgeInsets.all(15),
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    customItemsHeights: _customMenuItemHeights(_seasonList),
-                    onChanged: (value) => {},
-                    items: _dividedMenuItemList(_seasonList),
+                  ),
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
-                DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    buttonDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.lightText),
-                      color: AppColors.ten,
-                    ),
-                    dropdownMaxHeight: 200,
-                    iconEnabledColor: Colors.white,
-                    hint: const Text(
-                      "Select Year",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    dropdownDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    customItemsHeights: _customMenuItemHeights(_yearsList),
-                    onChanged: (value) => {},
-                    items: _dividedMenuItemList(_yearsList),
+                const SizedBox(height: 20),
+                Flexible(
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    children: [
+                      SeasonalCard(),
+                      SeasonalCard(),
+                      SeasonalCard(),
+                      SeasonalCard(),
+                      SeasonalCard(),
+                      SeasonalCard(),
+                      SeasonalCard(),
+                      SeasonalCard(),
+                      SeasonalCard(),
+                      SeasonalCard(),
+                    ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                backgroundColor: AppColors.ten,
-                foregroundColor: Colors.black,
-                padding: EdgeInsets.all(15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              child: const Text(
-                'Submit',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Flexible(
-              child: GridView.count(
-                crossAxisCount: 2,
-                children: [
-                  SeasonalCard(),
-                  SeasonalCard(),
-                  SeasonalCard(),
-                  SeasonalCard(),
-                  SeasonalCard(),
-                  SeasonalCard(),
-                  SeasonalCard(),
-                  SeasonalCard(),
-                  SeasonalCard(),
-                  SeasonalCard(),
-                ],
-              ),
-            ),
-          ],
-        ),
+          );
+        },
+        error: (err, st) {
+          Center(child: Text(err.toString()));
+        },
+        loading: () {
+          Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }

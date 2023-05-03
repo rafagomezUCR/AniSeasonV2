@@ -6,9 +6,9 @@ final apiServiceProvider = Provider<JikanAPIService>((ref) {
   return JikanAPIService();
 });
 
-final getAnimeProvider =
+final getAnimeByIdProvider =
     FutureProvider.family<AnimeModel, int>((ref, id) async {
-  return ref.watch(apiServiceProvider).getAnime(id);
+  return ref.watch(apiServiceProvider).getAnimeById(id);
 });
 
 final getTopAnimeProvider = FutureProvider<List<AnimeModel>>((ref) {

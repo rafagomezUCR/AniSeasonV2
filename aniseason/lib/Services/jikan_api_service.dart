@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:aniseason/Models/anime_model.dart';
 import 'package:http/http.dart';
@@ -6,7 +7,7 @@ import 'package:http/http.dart';
 class JikanAPIService {
   String endpoint = 'https://api.jikan.moe/v4/';
 
-  Future<AnimeModel> getAnime(int id) async {
+  Future<AnimeModel> getAnimeById(int id) async {
     Response response = await get(Uri.parse('${endpoint}anime/$id'));
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body)['data'];
@@ -50,6 +51,9 @@ class JikanAPIService {
     Response response = await get(Uri.parse('${endpoint}seasons/upcoming'));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body)['data'];
+      for (int i = 0; i < result.length; ++i) {
+        print(result[i]['title'] + " - " + result[i]['score'].toString());
+      }
       return result.map((e) => AnimeModel.fromJson(e)).toList();
     } else {
       throw Exception(response.reasonPhrase);

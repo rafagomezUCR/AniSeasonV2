@@ -6,16 +6,11 @@ import 'Screens/homepage_screen.dart';
 
 void main() => runApp(const ProviderScope(child: MyApp()));
 
-class MyApp extends ConsumerStatefulWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  ConsumerState<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends ConsumerState<MyApp> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final router = ref.watch(goRouterProvider);
     return MaterialApp.router(
       routeInformationParser: router.routeInformationParser,
