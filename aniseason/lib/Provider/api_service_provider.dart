@@ -7,33 +7,35 @@ final apiServiceProvider = Provider<JikanAPIService>((ref) {
 });
 
 final getAnimeByIdProvider =
-    FutureProvider.family<AnimeModel, int>((ref, id) async {
+    FutureProvider.family.autoDispose<AnimeModel, int>((ref, id) async {
   return ref.watch(apiServiceProvider).getAnimeById(id);
 });
 
-final getTopAnimeProvider = FutureProvider<List<AnimeModel>>((ref) {
+final getTopAnimeProvider = FutureProvider.autoDispose<List<AnimeModel>>((ref) {
   return ref.watch(apiServiceProvider).getTopAnime();
 });
 
 final searchAnimeProvider =
-    FutureProvider.family<List<AnimeModel>, String>((ref, anime) {
+    FutureProvider.family.autoDispose<List<AnimeModel>, String>((ref, anime) {
   return ref.watch(apiServiceProvider).searchAnime(anime);
 });
 
-final getCurrentSeasonProvider = FutureProvider<List<AnimeModel>>((ref) {
+final getCurrentSeasonProvider =
+    FutureProvider.autoDispose<List<AnimeModel>>((ref) {
   return ref.watch(apiServiceProvider).getCurrentSeason();
 });
 
-final getUpcomingSeasonProvider = FutureProvider<List<AnimeModel>>((ref) {
+final getUpcomingSeasonProvider =
+    FutureProvider.autoDispose<List<AnimeModel>>((ref) {
   return ref.watch(apiServiceProvider).getUpcomingSeason();
 });
 
 final getScheduleProvider =
-    FutureProvider.family<List<AnimeModel>, String>((ref, day) {
+    FutureProvider.family.autoDispose<List<AnimeModel>, String>((ref, day) {
   return ref.watch(apiServiceProvider).getSchedule(day);
 });
 
-final getSeasonProvider =
-    FutureProvider.family<List<AnimeModel>, List<String>>((ref, date) {
+final getSeasonProvider = FutureProvider.family
+    .autoDispose<List<AnimeModel>, List<String>>((ref, date) {
   return ref.watch(apiServiceProvider).getSeason(date[0], date[1]);
 });

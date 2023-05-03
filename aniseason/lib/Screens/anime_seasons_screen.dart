@@ -55,7 +55,7 @@ class AnimeSeasons extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    final animeSeason = ref.watch(getSeasonProvider(['summer', '2010']));
+    //final animeSeason = ref.watch(getSeasonProvider(['summer', '2010']));
 
     return Scaffold(
       appBar: AppBar(
@@ -64,114 +64,104 @@ class AnimeSeasons extends ConsumerWidget {
         toolbarHeight: 100,
         backgroundColor: AppColors.ten,
       ),
-      body: animeSeason.when(
-        data: (animeData) {
-          Container(
-            margin: EdgeInsets.fromLTRB(
-                screenWidth * 0.05, 10, screenWidth * 0.05, 0),
-            alignment: Alignment.topCenter,
-            child: Column(
+      body: Container(
+        margin:
+            EdgeInsets.fromLTRB(screenWidth * 0.05, 10, screenWidth * 0.05, 0),
+        alignment: Alignment.topCenter,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                        buttonDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: AppColors.lightText),
-                          color: AppColors.ten,
-                        ),
-                        iconEnabledColor: Colors.white,
-                        hint: const Text(
-                          "Select Season",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        dropdownDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        customItemsHeights: _customMenuItemHeights(_seasonList),
-                        onChanged: (value) => {},
-                        items: _dividedMenuItemList(_seasonList),
+                DropdownButtonHideUnderline(
+                  child: DropdownButton2(
+                    buttonDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.lightText),
+                      color: AppColors.ten,
+                    ),
+                    iconEnabledColor: Colors.white,
+                    hint: const Text(
+                      "Select Season",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                        buttonDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: AppColors.lightText),
-                          color: AppColors.ten,
-                        ),
-                        dropdownMaxHeight: 200,
-                        iconEnabledColor: Colors.white,
-                        hint: const Text(
-                          "Select Year",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        dropdownDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        customItemsHeights: _customMenuItemHeights(_yearsList),
-                        onChanged: (value) => {},
-                        items: _dividedMenuItemList(_yearsList),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    backgroundColor: AppColors.ten,
-                    foregroundColor: Colors.black,
-                    padding: EdgeInsets.all(15),
-                    shape: RoundedRectangleBorder(
+                    dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                  ),
-                  child: const Text(
-                    'Submit',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
+                    customItemsHeights: _customMenuItemHeights(_seasonList),
+                    onChanged: (value) => {},
+                    items: _dividedMenuItemList(_seasonList),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Flexible(
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    children: [
-                      SeasonalCard(),
-                      SeasonalCard(),
-                      SeasonalCard(),
-                      SeasonalCard(),
-                      SeasonalCard(),
-                      SeasonalCard(),
-                      SeasonalCard(),
-                      SeasonalCard(),
-                      SeasonalCard(),
-                      SeasonalCard(),
-                    ],
+                DropdownButtonHideUnderline(
+                  child: DropdownButton2(
+                    buttonDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.lightText),
+                      color: AppColors.ten,
+                    ),
+                    dropdownMaxHeight: 200,
+                    iconEnabledColor: Colors.white,
+                    hint: const Text(
+                      "Select Year",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    customItemsHeights: _customMenuItemHeights(_yearsList),
+                    onChanged: (value) => {},
+                    items: _dividedMenuItemList(_yearsList),
                   ),
                 ),
               ],
             ),
-          );
-        },
-        error: (err, st) {
-          Center(child: Text(err.toString()));
-        },
-        loading: () {
-          Center(child: CircularProgressIndicator());
-        },
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(
+                backgroundColor: AppColors.ten,
+                foregroundColor: Colors.black,
+                padding: EdgeInsets.all(15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              child: const Text(
+                'Submit',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Flexible(
+              child: GridView.count(
+                crossAxisCount: 2,
+                children: [
+                  SeasonalCard(context),
+                  SeasonalCard(context),
+                  SeasonalCard(context),
+                  SeasonalCard(context),
+                  SeasonalCard(context),
+                  SeasonalCard(context),
+                  SeasonalCard(context),
+                  SeasonalCard(context),
+                  SeasonalCard(context),
+                  SeasonalCard(context),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

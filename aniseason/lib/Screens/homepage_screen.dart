@@ -1,6 +1,5 @@
 import 'package:aniseason/Provider/api_service_provider.dart';
 import 'package:aniseason/Widgets/bottom_nav_bar.dart';
-import 'package:aniseason/Widgets/homepage_widgets.dart';
 import 'package:aniseason/Widgets/scrollable_card.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -23,6 +22,7 @@ class HomePage extends ConsumerWidget {
     final topAnime = ref.watch(getTopAnimeProvider);
     final currentSeason = ref.watch(getCurrentSeasonProvider);
     final upcomingSeason = ref.watch(getUpcomingSeasonProvider);
+    final season = ref.watch(getSeasonProvider(['2010', 'summer']));
     return Scaffold(
       body: Container(
         margin: EdgeInsets.fromLTRB(
