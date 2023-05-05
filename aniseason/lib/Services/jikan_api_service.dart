@@ -69,6 +69,7 @@ class JikanAPIService {
   }
 
   Future<List<AnimeModel>> getSeason(String year, String season) async {
+    print(year + " - " + season);
     Response response =
         await get(Uri.parse('${endpoint}seasons/$year/$season'));
     if (response.statusCode == 200) {

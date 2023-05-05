@@ -1,6 +1,7 @@
 import 'package:aniseason/Models/anime_model.dart';
 import 'package:aniseason/Services/jikan_api_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 final apiServiceProvider = Provider<JikanAPIService>((ref) {
   return JikanAPIService();
@@ -36,6 +37,6 @@ final getScheduleProvider =
 });
 
 final getSeasonProvider = FutureProvider.family
-    .autoDispose<List<AnimeModel>, List<String>>((ref, date) {
-  return ref.watch(apiServiceProvider).getSeason(date[0], date[1]);
+    .autoDispose<List<AnimeModel>, Tuple2<String, String>>((ref, date) {
+  return ref.watch(apiServiceProvider).getSeason(date.item1, date.item2);
 });

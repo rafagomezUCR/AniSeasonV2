@@ -44,6 +44,7 @@ dependencies:
   intl: ^0.18.1
   http: ^0.13.5
   cached_network_image: ^3.2.3
+  tuple: ^2.0.1
 
 dev_dependencies:
   flutter_test:

@@ -8,6 +8,7 @@ import 'package:aniseason/Styles/appcolors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:tuple/tuple.dart';
 import 'dart:ui' as ui;
 
 import '../Models/anime_model.dart';
@@ -19,10 +20,11 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    final date = Tuple2<String, String>('2010', 'summer');
     final topAnime = ref.watch(getTopAnimeProvider);
     final currentSeason = ref.watch(getCurrentSeasonProvider);
     final upcomingSeason = ref.watch(getUpcomingSeasonProvider);
-    final season = ref.watch(getSeasonProvider(['2010', 'summer']));
+    final season = ref.watch(getSeasonProvider(date));
     return Scaffold(
       body: Container(
         margin: EdgeInsets.fromLTRB(
