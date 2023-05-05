@@ -21,7 +21,7 @@ class _BottomNavBarState extends ConsumerState<BottomNavBar> {
     return Container(
       color: AppColors.thirty,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: GNav(
           selectedIndex: index,
           backgroundColor: AppColors.thirty,

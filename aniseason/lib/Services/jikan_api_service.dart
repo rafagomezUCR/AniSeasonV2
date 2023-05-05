@@ -74,9 +74,6 @@ class JikanAPIService {
         await get(Uri.parse('${endpoint}seasons/$year/$season'));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body)['data'];
-      for (int i = 0; i < result.length; ++i) {
-        print(result[i]['title']);
-      }
       return result.map((e) => AnimeModel.fromJson(e)).toList();
     } else {
       throw Exception(response.reasonPhrase);

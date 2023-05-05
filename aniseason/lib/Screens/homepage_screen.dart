@@ -12,6 +12,7 @@ import 'package:tuple/tuple.dart';
 import 'dart:ui' as ui;
 
 import '../Models/anime_model.dart';
+import '../Widgets/anime_info_card.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -20,11 +21,8 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    final date = Tuple2<String, String>('2010', 'summer');
     final topAnime = ref.watch(getTopAnimeProvider);
     final currentSeason = ref.watch(getCurrentSeasonProvider);
-    final upcomingSeason = ref.watch(getUpcomingSeasonProvider);
-    final season = ref.watch(getSeasonProvider(date));
     return Scaffold(
       body: Container(
         margin: EdgeInsets.fromLTRB(
@@ -105,88 +103,45 @@ class HomePage extends ConsumerWidget {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 20),
+                      margin: const EdgeInsets.all(10),
                       child: SizedBox(
-                        height: 200,
-                        child: topAnime.when(
-                          data: (animeData) {
-                            List<AnimeModel> animeList =
-                                animeData.map((e) => e).toList();
-                            return ListView.separated(
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(width: 10);
-                              },
-                              itemCount: animeList.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return ScrollableCard(
-                                    context, animeList[index].largeImageUrl);
-                              },
-                            );
-                          },
-                          error: (err, stack) {
-                            Center(child: Text(err.toString()));
-                          },
-                          loading: () {
-                            const Center(child: CircularProgressIndicator());
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: SizedBox(
-                        height: 200,
+                        height: 400,
                         child: currentSeason.when(
                           data: (animeData) {
                             List<AnimeModel> animeList =
                                 animeData.map((e) => e).toList();
                             return ListView.separated(
                               separatorBuilder: (context, index) {
-                                return const SizedBox(width: 10);
+                                return const SizedBox(height: 10);
                               },
                               itemCount: animeList.length,
-                              scrollDirection: Axis.horizontal,
+                              padding: EdgeInsets.fromLTRB(0, 0, 0, 100),
+                              scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) {
-                                return ScrollableCard(
-                                    context, animeList[index].largeImageUrl);
+                                return Container(
+                                  child: Row(
+                                    children: [
+                                      scrollableCard(context,
+                                          animeList[index].largeImageUrl),
+                                      Expanded(
+                                        child: animeInfoCard(
+                                            context,
+                                            animeList[index].titleEnglish,
+                                            animeList[index].score,
+                                            animeList[index].episodes),
+                                      ),
+                                    ],
+                                  ),
+                                );
                               },
                             );
                           },
                           error: (err, stack) {
-                            Center(child: Text(err.toString()));
+                            return Center(child: Text(err.toString()));
                           },
                           loading: () {
-                            const Center(child: CircularProgressIndicator());
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: SizedBox(
-                        height: 200,
-                        child: upcomingSeason.when(
-                          data: (animeData) {
-                            List<AnimeModel> animeList =
-                                animeData.map((e) => e).toList();
-                            return ListView.separated(
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(width: 10);
-                              },
-                              itemCount: animeList.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return ScrollableCard(
-                                    context, animeList[index].largeImageUrl);
-                              },
-                            );
-                          },
-                          error: (err, stack) {
-                            Center(child: Text(err.toString()));
-                          },
-                          loading: () {
-                            const Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           },
                         ),
                       ),

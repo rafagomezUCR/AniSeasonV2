@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-Widget ScrollableCard(BuildContext context, String imageUrl) {
+Widget scrollableCard(BuildContext context, String imageUrl) {
   return Column(
     children: [
       GestureDetector(
@@ -19,8 +19,6 @@ Widget ScrollableCard(BuildContext context, String imageUrl) {
           ),
         ),
       ),
-      Text("Anime"),
-      Text("Genre"),
     ],
   );
 }
