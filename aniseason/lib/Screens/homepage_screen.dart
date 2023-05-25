@@ -49,105 +49,119 @@ class HomePage extends ConsumerWidget {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: CarouselSlider.builder(
-                        itemCount: 5,
-                        options: CarouselOptions(
-                          height: screenHeight * 0.3,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 7),
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 500),
-                          enlargeCenterPage: true,
-                        ),
-                        itemBuilder: (context, index, realIndex) {
-                          return topAnime.when(
-                            data: (animeData) {
-                              List<AnimeModel> topAnimeList =
-                                  animeData.map((e) => e).toList();
-                              return GestureDetector(
-                                onTap: () {
-                                  context.push('/animeInfo');
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 5.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          topAnimeList[index].largeImageUrl),
-                                    ),
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 20),
+                    child: CarouselSlider.builder(
+                      itemCount: 5,
+                      options: CarouselOptions(
+                        height: screenHeight * 0.3,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 7),
+                        autoPlayAnimationDuration:
+                            const Duration(milliseconds: 500),
+                        enlargeCenterPage: true,
+                      ),
+                      itemBuilder: (context, index, realIndex) {
+                        return topAnime.when(
+                          data: (animeData) {
+                            List<AnimeModel> topAnimeList =
+                                animeData.map((e) => e).toList();
+                            return GestureDetector(
+                              onTap: () {
+                                context.push('/animeInfo');
+                              },
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        topAnimeList[index].largeImageUrl),
                                   ),
                                 ),
-                              );
+                              ),
+                            );
+                          },
+                          error: (err, stackTrace) {
+                            return Center(
+                              child: Text(err.toString()),
+                            );
+                          },
+                          loading: () {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 30, 0, 20),
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      "Current Season",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: currentSeason.when(
+                        data: (animeData) {
+                          List<AnimeModel> animeList =
+                              animeData.map((e) => e).toList();
+                          return ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(height: 10);
                             },
-                            error: (err, stackTrace) {
-                              return Center(
-                                child: Text(err.toString()),
-                              );
-                            },
-                            loading: () {
-                              return const Center(
-                                child: CircularProgressIndicator(),
+                            itemCount: animeList.length,
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child: Row(
+                                  children: [
+                                    scrollableCard(context,
+                                        animeList[index].largeImageUrl),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                      height: 150,
+                                      width: screenWidth * 0.5,
+                                      child: animeInfoCard(
+                                          context,
+                                          animeList[index].titleEnglish,
+                                          animeList[index].score,
+                                          animeList[index].episodes,
+                                          animeList[index].type,
+                                          animeList[index].duration),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );
                         },
+                        error: (err, stack) {
+                          return Center(child: Text(err.toString()));
+                        },
+                        loading: () {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        },
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      child: SizedBox(
-                        height: 400,
-                        child: currentSeason.when(
-                          data: (animeData) {
-                            List<AnimeModel> animeList =
-                                animeData.map((e) => e).toList();
-                            return ListView.separated(
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(height: 10);
-                              },
-                              itemCount: animeList.length,
-                              padding: EdgeInsets.fromLTRB(0, 0, 0, 100),
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  child: Row(
-                                    children: [
-                                      scrollableCard(context,
-                                          animeList[index].largeImageUrl),
-                                      Expanded(
-                                        child: animeInfoCard(
-                                            context,
-                                            animeList[index].titleEnglish,
-                                            animeList[index].score,
-                                            animeList[index].episodes),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          error: (err, stack) {
-                            return Center(child: Text(err.toString()));
-                          },
-                          loading: () {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
