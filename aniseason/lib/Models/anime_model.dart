@@ -22,7 +22,7 @@ class AnimeModel {
   final String synopsis;
   final String season;
   final int year;
-  final List<String> streaming;
+  final List<Streaming> streaming;
 
   AnimeModel({
     required this.malId,
@@ -53,10 +53,17 @@ class AnimeModel {
 
   factory AnimeModel.fromJson(Map<String, dynamic> json) {
     double score;
+    List<Streaming> streaming;
     if (json['score'] != null) {
       score = json['score'].toDouble();
     } else {
       score = 0.0;
+    }
+    if (json['streaming'] == null) {
+      streaming = [];
+    } else {
+      streaming = List<Streaming>.from(
+          json['streaming'].map((x) => Streaming.fromJson(x)));
     }
     return AnimeModel(
       malId: json['mal_id'] ??= '',
@@ -66,7 +73,7 @@ class AnimeModel {
       largeImageUrl: json['images']['jpg']['large_image_url'] ??= '',
       trailerUrl: json['trailer']['url'] ??= '',
       title: json['title'] ??= '',
-      titleEnglish: json['title_english'] ??= '',
+      titleEnglish: json['title_english'] ??= json['title'],
       titleJapanese: json['title_japanese'] ??= '',
       type: json['type'] ??= '',
       source: json['source'] ??= '',
@@ -82,7 +89,18 @@ class AnimeModel {
       synopsis: json['synopsis'] ??= '',
       season: json['season'] ??= '',
       year: json['year'] ??= 0,
-      streaming: json['streaming'] ??= <String>[],
+      streaming: streaming,
     );
+  }
+}
+
+class Streaming {
+  String name;
+  String url;
+
+  Streaming({required this.name, required this.url});
+
+  factory Streaming.fromJson(Map<String, dynamic> json) {
+    return Streaming(name: json['name'], url: json['url']);
   }
 }

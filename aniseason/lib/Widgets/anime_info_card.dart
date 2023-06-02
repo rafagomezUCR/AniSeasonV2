@@ -27,7 +27,9 @@ Widget animeInfoCard(BuildContext context, String title, double score,
             const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(duration.toString()),
+              child: Text(episodes != 0
+                  ? episodes.toString() + " Episodes"
+                  : "Unknown Episodes"),
             ),
           ],
         ),
