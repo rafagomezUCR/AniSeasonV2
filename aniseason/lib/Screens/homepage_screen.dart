@@ -51,6 +51,7 @@ class HomePage extends ConsumerWidget {
             Expanded(
               child: Column(
                 children: [
+                  Text("TOP ANIME"),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
                     child: CarouselSlider.builder(
@@ -101,7 +102,7 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(10, 30, 0, 20),
+                    padding: const EdgeInsets.fromLTRB(10, 30, 0, 20),
                     alignment: Alignment.centerLeft,
                     child: const Text(
                       "Current Season",
@@ -113,7 +114,7 @@ class HomePage extends ConsumerWidget {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: currentSeason.when(
                         data: (animeData) {
                           List<AnimeModel> animeList =
@@ -126,27 +127,24 @@ class HomePage extends ConsumerWidget {
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
-                              return Container(
-                                child: Row(
-                                  children: [
-                                    scrollableCard(context,
-                                        animeList[index].largeImageUrl),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    SizedBox(
-                                      height: 150,
-                                      width: screenWidth * 0.5,
-                                      child: animeInfoCard(
-                                          context,
-                                          animeList[index].titleEnglish,
-                                          animeList[index].score,
-                                          animeList[index].episodes,
-                                          animeList[index].type,
-                                          animeList[index].duration),
-                                    ),
-                                  ],
-                                ),
+                              return Row(
+                                children: [
+                                  scrollableCard(
+                                      context, animeList[index].largeImageUrl),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  SizedBox(
+                                    height: 150,
+                                    width: screenWidth * 0.5,
+                                    child: animeInfoCard(
+                                        context,
+                                        animeList[index].titleEnglish,
+                                        animeList[index].score,
+                                        animeList[index].episodes,
+                                        animeList[index].genres),
+                                  ),
+                                ],
                               );
                             },
                           );
