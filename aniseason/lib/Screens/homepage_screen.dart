@@ -121,7 +121,7 @@ class HomePage extends ConsumerWidget {
                               animeData.map((e) => e).toList();
                           return ListView.separated(
                             separatorBuilder: (context, index) {
-                              return const SizedBox(height: 10);
+                              return const SizedBox(height: 20);
                             },
                             itemCount: animeList.length,
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),

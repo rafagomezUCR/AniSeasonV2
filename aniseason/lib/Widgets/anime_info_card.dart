@@ -18,6 +18,8 @@ Widget animeInfoCard(BuildContext context, String title, double score,
               alignment: Alignment.topLeft,
               child: Text(
                 title,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),

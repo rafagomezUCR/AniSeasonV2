@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:aniseason/Provider/api_service_provider.dart';
 import 'package:aniseason/Styles/appcolors.dart';
 import 'package:aniseason/Widgets/seasonal_card.dart';
@@ -6,6 +8,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../Models/anime_model.dart';
 
 class AnimeSeasons extends ConsumerWidget {
   AnimeSeasons({super.key});
@@ -56,6 +60,7 @@ class AnimeSeasons extends ConsumerWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     //final animeSeason = ref.watch(getSeasonProvider(['summer', '2010']));
+    final currentSeason = ref.watch(getCurrentSeasonProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -144,20 +149,27 @@ class AnimeSeasons extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             Flexible(
-              child: GridView.count(
-                crossAxisCount: 2,
-                children: [
-                  SeasonalCard(context),
-                  SeasonalCard(context),
-                  SeasonalCard(context),
-                  SeasonalCard(context),
-                  SeasonalCard(context),
-                  SeasonalCard(context),
-                  SeasonalCard(context),
-                  SeasonalCard(context),
-                  SeasonalCard(context),
-                  SeasonalCard(context),
-                ],
+              child: currentSeason.when(
+                data: (animeData) {
+                  List<AnimeModel> animeSeason =
+                      animeData.map((e) => e).toList();
+                  return GridView.builder(
+                    itemCount: animeData.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      return SeasonalCard(
+                          context, animeSeason[index].largeImageUrl);
+                    },
+                  );
+                },
+                error: (err, stack) {
+                  return Center(child: Text(err.toString()));
+                },
+                loading: () {
+                  return const Center(child: CircularProgressIndicator());
+                },
               ),
             ),
           ],
