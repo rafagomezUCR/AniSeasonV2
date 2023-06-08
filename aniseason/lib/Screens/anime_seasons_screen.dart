@@ -155,9 +155,12 @@ class AnimeSeasons extends ConsumerWidget {
                       animeData.map((e) => e).toList();
                   return GridView.builder(
                     itemCount: animeData.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisExtent: screenHeight * 0.3,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 10,
+                    ),
                     itemBuilder: (context, index) {
                       return SeasonalCard(
                           context, animeSeason[index].largeImageUrl);
