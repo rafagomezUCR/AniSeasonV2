@@ -11,6 +11,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../Models/anime_model.dart';
 
+final SelectedSeasonProvider = StateProvider<String>((ref) {
+  return 'Spring';
+});
+
+final SelectedYearProvider = StateProvider<String>((ref) {
+  return '2020';
+});
+
 class AnimeSeasons extends ConsumerWidget {
   AnimeSeasons({super.key});
   final List<String> _seasonList = ['Spring', 'Summer', 'Fall', 'Winter'];
@@ -18,8 +26,6 @@ class AnimeSeasons extends ConsumerWidget {
     DateTime.now().year - 1980 + 1,
     (index) => (DateTime.now().year - index).toString(),
   );
-
-  String? selectedSeason;
 
   List<DropdownMenuItem<String>> _dividedMenuItemList(List<String> items) {
     List<DropdownMenuItem<String>> menuItems = [];
@@ -59,8 +65,9 @@ class AnimeSeasons extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    //final animeSeason = ref.watch(getSeasonProvider(['summer', '2010']));
     final currentSeason = ref.watch(getCurrentSeasonProvider);
+    String selectedSeason = ref.watch(SelectedSeasonProvider);
+    String selectedYear = ref.watch(SelectedYearProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -85,19 +92,22 @@ class AnimeSeasons extends ConsumerWidget {
                       border: Border.all(color: AppColors.lightText),
                       color: AppColors.ten,
                     ),
+                    value: selectedSeason,
                     iconEnabledColor: Colors.white,
-                    hint: const Text(
-                      "Select Season",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    // hint: const Text(
+                    //   "Select Season",
+                    //   style: TextStyle(
+                    //     color: Colors.white,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     customItemsHeights: _customMenuItemHeights(_seasonList),
-                    onChanged: (value) => {},
+                    onChanged: (value) => {
+                      ref.read(SelectedSeasonProvider.notifier).state = value!
+                    },
                     items: _dividedMenuItemList(_seasonList),
                   ),
                 ),
@@ -108,20 +118,25 @@ class AnimeSeasons extends ConsumerWidget {
                       border: Border.all(color: AppColors.lightText),
                       color: AppColors.ten,
                     ),
+                    value: selectedYear,
                     dropdownMaxHeight: 200,
                     iconEnabledColor: Colors.white,
-                    hint: const Text(
-                      "Select Year",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    // hint: const Text(
+                    //   "Select Year",
+                    //   style: TextStyle(
+                    //     color: Colors.white,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     customItemsHeights: _customMenuItemHeights(_yearsList),
-                    onChanged: (value) => {},
+                    onChanged: (value) => {
+                      ref
+                          .read(SelectedYearProvider.notifier)
+                          .update((state) => value!)
+                    },
                     items: _dividedMenuItemList(_yearsList),
                   ),
                 ),
