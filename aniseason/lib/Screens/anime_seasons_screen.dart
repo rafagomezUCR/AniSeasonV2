@@ -8,16 +8,9 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import '../Models/anime_model.dart';
-
-final SelectedSeasonProvider = StateProvider<String>((ref) {
-  return 'Spring';
-});
-
-final SelectedYearProvider = StateProvider<String>((ref) {
-  return '2020';
-});
 
 class AnimeSeasons extends ConsumerWidget {
   AnimeSeasons({super.key});
@@ -65,9 +58,9 @@ class AnimeSeasons extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    final currentSeason = ref.watch(getCurrentSeasonProvider);
-    String selectedSeason = ref.watch(SelectedSeasonProvider);
-    String selectedYear = ref.watch(SelectedYearProvider);
+    String selectedSeason = ref.watch(selectedSeasonProvider);
+    String selectedYear = ref.watch(selectedYearProvider);
+    final selectedSeasonYear = ref.watch(animeSeasonProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -94,19 +87,12 @@ class AnimeSeasons extends ConsumerWidget {
                     ),
                     value: selectedSeason,
                     iconEnabledColor: Colors.white,
-                    // hint: const Text(
-                    //   "Select Season",
-                    //   style: TextStyle(
-                    //     color: Colors.white,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
-                    // ),
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     customItemsHeights: _customMenuItemHeights(_seasonList),
                     onChanged: (value) => {
-                      ref.read(SelectedSeasonProvider.notifier).state = value!
+                      ref.read(selectedSeasonProvider.notifier).state = value!
                     },
                     items: _dividedMenuItemList(_seasonList),
                   ),
@@ -121,20 +107,13 @@ class AnimeSeasons extends ConsumerWidget {
                     value: selectedYear,
                     dropdownMaxHeight: 200,
                     iconEnabledColor: Colors.white,
-                    // hint: const Text(
-                    //   "Select Year",
-                    //   style: TextStyle(
-                    //     color: Colors.white,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
-                    // ),
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     customItemsHeights: _customMenuItemHeights(_yearsList),
                     onChanged: (value) => {
                       ref
-                          .read(SelectedYearProvider.notifier)
+                          .read(selectedYearProvider.notifier)
                           .update((state) => value!)
                     },
                     items: _dividedMenuItemList(_yearsList),
@@ -144,11 +123,13 @@ class AnimeSeasons extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                ref.refresh(animeSeasonProvider);
+              },
               style: TextButton.styleFrom(
                 backgroundColor: AppColors.ten,
                 foregroundColor: Colors.black,
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -164,7 +145,7 @@ class AnimeSeasons extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             Flexible(
-              child: currentSeason.when(
+              child: selectedSeasonYear.when(
                 data: (animeData) {
                   List<AnimeModel> animeSeason =
                       animeData.map((e) => e).toList();
@@ -183,7 +164,7 @@ class AnimeSeasons extends ConsumerWidget {
                   );
                 },
                 error: (err, stack) {
-                  return Center(child: Text(err.toString()));
+                  return Center(child: Text(err.toString() + "error2"));
                 },
                 loading: () {
                   return const Center(child: CircularProgressIndicator());

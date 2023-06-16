@@ -40,3 +40,18 @@ final getSeasonProvider = FutureProvider.family
     .autoDispose<List<AnimeModel>, Tuple2<String, String>>((ref, date) {
   return ref.watch(apiServiceProvider).getSeason(date.item1, date.item2);
 });
+
+final selectedSeasonProvider = StateProvider<String>((ref) {
+  return 'Spring';
+});
+
+final selectedYearProvider = StateProvider<String>((ref) {
+  return '2020';
+});
+
+final animeSeasonProvider =
+    Provider.autoDispose<AsyncValue<List<AnimeModel>>>((ref) {
+  final animeYear = ref.read(selectedYearProvider);
+  final animeSeason = ref.read(selectedSeasonProvider);
+  return ref.watch(getSeasonProvider(Tuple2(animeYear, animeSeason)));
+});
