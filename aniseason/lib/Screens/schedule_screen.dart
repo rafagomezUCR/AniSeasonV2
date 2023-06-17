@@ -1,20 +1,23 @@
 import 'dart:collection';
 
+import 'package:aniseason/Provider/api_service_provider.dart';
+import 'package:aniseason/Widgets/tab_bar_view_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../Styles/appcolors.dart';
 
-class AnimeSchedule extends StatefulWidget {
-  AnimeSchedule({super.key});
+class AnimeSchedule extends ConsumerStatefulWidget {
+  const AnimeSchedule({super.key});
 
   @override
-  State<AnimeSchedule> createState() => _AnimeScheduleState();
+  ConsumerState createState() => _AnimeScheduleState();
 }
 
-class _AnimeScheduleState extends State<AnimeSchedule> {
+class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
   late String _currentDay;
 
   @override
@@ -35,6 +38,9 @@ class _AnimeScheduleState extends State<AnimeSchedule> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    final animeSchedule = ref.watch(getScheduleProvider(_currentDay));
     return DefaultTabController(
       initialIndex: startingTabIndex[_currentDay] ?? 0,
       length: 7,
@@ -50,7 +56,6 @@ class _AnimeScheduleState extends State<AnimeSchedule> {
               Tab(
                 child: Text(
                   "S",
-                  overflow: TextOverflow.fade,
                   style: TextStyle(color: AppColors.lightText),
                 ),
               ),
@@ -95,27 +100,13 @@ class _AnimeScheduleState extends State<AnimeSchedule> {
         ),
         body: TabBarView(
           children: [
-            Center(
-              child: Text("1"),
-            ),
-            Center(
-              child: Text("1"),
-            ),
-            Center(
-              child: Text("1"),
-            ),
-            Center(
-              child: Text("1"),
-            ),
-            Center(
-              child: Text("1"),
-            ),
-            Center(
-              child: Text("1"),
-            ),
-            Center(
-              child: Text("1"),
-            ),
+            AnimeTabBarView(context, 'sunday', animeSchedule),
+            AnimeTabBarView(context, 'monday', animeSchedule),
+            AnimeTabBarView(context, 'tuesday', animeSchedule),
+            AnimeTabBarView(context, 'wednesday', animeSchedule),
+            AnimeTabBarView(context, 'thursday', animeSchedule),
+            AnimeTabBarView(context, 'friday', animeSchedule),
+            AnimeTabBarView(context, 'saturday', animeSchedule),
           ],
         ),
       ),
