@@ -58,6 +58,7 @@ class JikanAPIService {
   }
 
   Future<List<AnimeModel>> getSchedule(String day) async {
+    print('${endpoint}schedules?filter=$day&sfw=true');
     Response response =
         await get(Uri.parse('${endpoint}schedules?filter=$day&sfw=true'));
     if (response.statusCode == 200) {

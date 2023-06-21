@@ -40,7 +40,7 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    final animeSchedule = ref.watch(getScheduleProvider(_currentDay));
+    //final animeSchedule = ref.watch(getScheduleProvider(_currentDay));
     return DefaultTabController(
       initialIndex: startingTabIndex[_currentDay] ?? 0,
       length: 7,
@@ -100,13 +100,13 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
         ),
         body: TabBarView(
           children: [
-            AnimeTabBarView(context, 'sunday', animeSchedule),
-            AnimeTabBarView(context, 'monday', animeSchedule),
-            AnimeTabBarView(context, 'tuesday', animeSchedule),
-            AnimeTabBarView(context, 'wednesday', animeSchedule),
-            AnimeTabBarView(context, 'thursday', animeSchedule),
-            AnimeTabBarView(context, 'friday', animeSchedule),
-            AnimeTabBarView(context, 'saturday', animeSchedule),
+            AnimeTabBarView(context, 'sunday'),
+            AnimeTabBarView(context, 'monday'),
+            AnimeTabBarView(context, 'tuesday'),
+            AnimeTabBarView(context, 'wednesday'),
+            AnimeTabBarView(context, 'thursday'),
+            AnimeTabBarView(context, 'friday'),
+            AnimeTabBarView(context, 'saturday'),
           ],
         ),
       ),
