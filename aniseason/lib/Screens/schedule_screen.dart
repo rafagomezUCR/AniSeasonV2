@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../Models/anime_model.dart';
 import '../Styles/appcolors.dart';
 
 class AnimeSchedule extends ConsumerStatefulWidget {
@@ -17,13 +18,31 @@ class AnimeSchedule extends ConsumerStatefulWidget {
   ConsumerState createState() => _AnimeScheduleState();
 }
 
-class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
+class _AnimeScheduleState extends ConsumerState<AnimeSchedule>
+    with TickerProviderStateMixin {
   late String _currentDay;
+  late TabController tabController;
+  late AsyncValue<List<AnimeModel>> animeSchedule;
 
   @override
   void initState() {
     super.initState();
     _currentDay = DateFormat('EEEE').format(DateTime.now());
+    tabController = TabController(length: 7, vsync: this);
+    tabController.index = startingTabIndex[_currentDay]!;
+    tabController.addListener(() {
+      if (!tabController.indexIsChanging) {
+        print(tabController.index);
+        animeSchedule = ref
+            .refresh(getScheduleProvider(tabIndextoDay[tabController.index]!));
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 
   Map<String, int> startingTabIndex = {
@@ -36,13 +55,23 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
     "Saturday": 6
   };
 
+  Map<int, String> tabIndextoDay = {
+    0: 'Sunday',
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday'
+  };
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    //final animeSchedule = ref.watch(getScheduleProvider(_currentDay));
+    animeSchedule = ref.watch(getScheduleProvider(_currentDay));
     return DefaultTabController(
-      initialIndex: startingTabIndex[_currentDay] ?? 0,
+      initialIndex: startingTabIndex[_currentDay]!,
       length: 7,
       child: Scaffold(
         appBar: AppBar(
@@ -51,6 +80,7 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
           toolbarHeight: 50,
           centerTitle: true,
           bottom: TabBar(
+            controller: tabController,
             indicatorColor: AppColors.ten,
             tabs: [
               Tab(
@@ -99,14 +129,15 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
           ),
         ),
         body: TabBarView(
+          controller: tabController,
           children: [
-            AnimeTabBarView(context, 'sunday'),
-            AnimeTabBarView(context, 'monday'),
-            AnimeTabBarView(context, 'tuesday'),
-            AnimeTabBarView(context, 'wednesday'),
-            AnimeTabBarView(context, 'thursday'),
-            AnimeTabBarView(context, 'friday'),
-            AnimeTabBarView(context, 'saturday'),
+            AnimeTabBarView(context, animeSchedule),
+            AnimeTabBarView(context, animeSchedule),
+            AnimeTabBarView(context, animeSchedule),
+            AnimeTabBarView(context, animeSchedule),
+            AnimeTabBarView(context, animeSchedule),
+            AnimeTabBarView(context, animeSchedule),
+            AnimeTabBarView(context, animeSchedule),
           ],
         ),
       ),

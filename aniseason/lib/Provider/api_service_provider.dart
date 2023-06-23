@@ -43,7 +43,6 @@ final getUpcomingSeasonProvider = FutureProvider.autoDispose<List<AnimeModel>>(
 final getScheduleProvider =
     FutureProvider.family.autoDispose<List<AnimeModel>, String>(
   (ref, day) {
-    print(day);
     return ref.watch(apiServiceProvider).getSchedule(day);
   },
 );

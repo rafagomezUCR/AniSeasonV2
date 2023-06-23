@@ -124,7 +124,7 @@ class AnimeSeasons extends ConsumerWidget {
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
-                ref.refresh(animeSeasonProvider);
+                ref.invalidate(animeSeasonProvider);
               },
               style: TextButton.styleFrom(
                 backgroundColor: AppColors.ten,
