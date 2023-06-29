@@ -3,38 +3,40 @@ import 'package:aniseason/Widgets/seasonal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:aniseason/Screens/schedule_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tuple/tuple.dart';
 
 import '../Models/anime_model.dart';
 
 Widget AnimeTabBarView(
-    BuildContext context, AsyncValue<List<AnimeModel>> animeSchedule) {
+    BuildContext context, WidgetRef ref, String year, String sea) {
   double screenHeight = MediaQuery.of(context).size.height;
   double screenWidth = MediaQuery.of(context).size.width;
-  return Container(
-    margin: EdgeInsets.all(10),
-    alignment: Alignment.topCenter,
-    child: animeSchedule.when(
-      data: (animeData) {
-        List<AnimeModel> animeSeason = animeData.map((e) => e).toList();
-        return GridView.builder(
-          itemCount: animeData.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: screenHeight * 0.3,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 10,
-          ),
-          itemBuilder: (context, index) {
-            return SeasonalCard(context, animeSeason[index].largeImageUrl);
-          },
-        );
-      },
-      error: (err, stack) {
-        return Center(child: Text(err.toString() + "error2"));
-      },
-      loading: () {
-        return const Center(child: CircularProgressIndicator());
-      },
-    ),
-  );
+  final animeSchedule = ref.watch(getSeasonProvider(Tuple2(year, sea)));
+  return animeSchedule.when(data: (data) {
+    List<AnimeModel> animeScheduleList = data.map((e) => e).toList();
+    return Container(
+      margin: EdgeInsets.all(10),
+      alignment: Alignment.topCenter,
+      child: GridView.builder(
+        itemCount: animeScheduleList.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: screenHeight * 0.3,
+          mainAxisSpacing: 20,
+          crossAxisSpacing: 10,
+        ),
+        itemBuilder: (context, index) {
+          return SeasonalCard(context, animeScheduleList[index].largeImageUrl);
+        },
+      ),
+    );
+  }, error: (error, stackTrace) {
+    return Center(
+      child: Text(error.toString()),
+    );
+  }, loading: () {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  });
 }

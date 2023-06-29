@@ -112,9 +112,7 @@ class AnimeSeasons extends ConsumerWidget {
                     ),
                     customItemsHeights: _customMenuItemHeights(_yearsList),
                     onChanged: (value) => {
-                      ref
-                          .read(selectedYearProvider.notifier)
-                          .update((state) => value!)
+                      ref.read(selectedYearProvider.notifier).state = value!
                     },
                     items: _dividedMenuItemList(_yearsList),
                   ),
@@ -164,7 +162,7 @@ class AnimeSeasons extends ConsumerWidget {
                   );
                 },
                 error: (err, stack) {
-                  return Center(child: Text(err.toString() + "error2"));
+                  return Center(child: Text(err.toString()));
                 },
                 loading: () {
                   return const Center(child: CircularProgressIndicator());

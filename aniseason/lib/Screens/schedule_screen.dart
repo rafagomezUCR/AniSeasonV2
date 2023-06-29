@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:tuple/tuple.dart';
 
 import '../Models/anime_model.dart';
 import '../Styles/appcolors.dart';
@@ -23,6 +24,9 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule>
   late String _currentDay;
   late TabController tabController;
   late AsyncValue<List<AnimeModel>> animeSchedule;
+  late AsyncValue<List<AnimeModel>> seasonTest;
+
+  //ref.read(selectedYearProvider.notifier).state = value!
 
   @override
   void initState() {
@@ -32,9 +36,22 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule>
     tabController.index = startingTabIndex[_currentDay]!;
     tabController.addListener(() {
       if (!tabController.indexIsChanging) {
-        print(tabController.index);
         animeSchedule = ref
             .refresh(getScheduleProvider(tabIndextoDay[tabController.index]!));
+        if (tabController.index == 0) {
+          print('what');
+          seasonTest = ref.watch(getSeasonProvider(Tuple2('2010', 'summer')));
+        }
+        if (tabController.index == 1) {
+          seasonTest = ref.refresh(getSeasonProvider(Tuple2('2015', 'summer')));
+        }
+        if (tabController.index == 2) {
+          seasonTest = ref.refresh(getSeasonProvider(Tuple2('2020', 'spring')));
+        }
+        if (tabController.index == 3) {
+        } else {
+          seasonTest = ref.refresh(getSeasonProvider(Tuple2('2017', 'summer')));
+        }
       }
     });
   }
@@ -69,7 +86,6 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule>
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    animeSchedule = ref.watch(getScheduleProvider(_currentDay));
     return DefaultTabController(
       initialIndex: startingTabIndex[_currentDay]!,
       length: 7,
@@ -128,18 +144,15 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule>
             ],
           ),
         ),
-        body: TabBarView(
-          controller: tabController,
-          children: [
-            AnimeTabBarView(context, animeSchedule),
-            AnimeTabBarView(context, animeSchedule),
-            AnimeTabBarView(context, animeSchedule),
-            AnimeTabBarView(context, animeSchedule),
-            AnimeTabBarView(context, animeSchedule),
-            AnimeTabBarView(context, animeSchedule),
-            AnimeTabBarView(context, animeSchedule),
-          ],
-        ),
+        body: TabBarView(controller: tabController, children: [
+          AnimeTabBarView(context, ref, '2008', 'summer'),
+          AnimeTabBarView(context, ref, '2010', 'spring'),
+          AnimeTabBarView(context, ref, '2015', 'summer'),
+          AnimeTabBarView(context, ref, '2018', 'summer'),
+          AnimeTabBarView(context, ref, '2020', 'summer'),
+          AnimeTabBarView(context, ref, '2020', 'summer'),
+          AnimeTabBarView(context, ref, '2009', 'summer'),
+        ]),
       ),
     );
   }
