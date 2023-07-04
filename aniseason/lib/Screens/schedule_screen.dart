@@ -26,34 +26,11 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule>
   late AsyncValue<List<AnimeModel>> animeSchedule;
   late AsyncValue<List<AnimeModel>> seasonTest;
 
-  //ref.read(selectedYearProvider.notifier).state = value!
-
   @override
   void initState() {
     super.initState();
     _currentDay = DateFormat('EEEE').format(DateTime.now());
     tabController = TabController(length: 7, vsync: this);
-    tabController.index = startingTabIndex[_currentDay]!;
-    tabController.addListener(() {
-      if (!tabController.indexIsChanging) {
-        animeSchedule = ref
-            .refresh(getScheduleProvider(tabIndextoDay[tabController.index]!));
-        if (tabController.index == 0) {
-          print('what');
-          seasonTest = ref.watch(getSeasonProvider(Tuple2('2010', 'summer')));
-        }
-        if (tabController.index == 1) {
-          seasonTest = ref.refresh(getSeasonProvider(Tuple2('2015', 'summer')));
-        }
-        if (tabController.index == 2) {
-          seasonTest = ref.refresh(getSeasonProvider(Tuple2('2020', 'spring')));
-        }
-        if (tabController.index == 3) {
-        } else {
-          seasonTest = ref.refresh(getSeasonProvider(Tuple2('2017', 'summer')));
-        }
-      }
-    });
   }
 
   @override
@@ -92,7 +69,7 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule>
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.ten,
-          title: Text("SCHEDULE"),
+          title: const Text("SCHEDULE"),
           toolbarHeight: 50,
           centerTitle: true,
           bottom: TabBar(

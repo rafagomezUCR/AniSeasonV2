@@ -15,7 +15,7 @@ Widget AnimeTabBarView(
   return animeSchedule.when(data: (data) {
     List<AnimeModel> animeScheduleList = data.map((e) => e).toList();
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       alignment: Alignment.topCenter,
       child: GridView.builder(
         itemCount: animeScheduleList.length,
@@ -35,7 +35,7 @@ Widget AnimeTabBarView(
       child: Text(error.toString()),
     );
   }, loading: () {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   });
