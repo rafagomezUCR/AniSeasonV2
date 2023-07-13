@@ -3,8 +3,12 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:go_router/go_router.dart';
 
+import '../Models/anime_model.dart';
+
 class AnimeInfo extends StatelessWidget {
-  const AnimeInfo({super.key});
+  const AnimeInfo({super.key, required this.anime});
+
+  final AnimeModel anime;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +16,7 @@ class AnimeInfo extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(50),
+        padding: const EdgeInsets.all(50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -25,7 +29,6 @@ class AnimeInfo extends StatelessWidget {
                     onPressed: () {
                       context.pop();
                     },
-                    child: Icon(Icons.arrow_back_ios_new),
                     style: ButtonStyle(
                       padding:
                           MaterialStateProperty.all(const EdgeInsets.all(10)),
@@ -40,9 +43,10 @@ class AnimeInfo extends StatelessWidget {
                         },
                       ),
                     ),
+                    child: const Icon(Icons.arrow_back_ios_new),
                   ),
                 ),
-                Align(
+                const Align(
                   alignment: Alignment.center,
                   child: Text("Anime Details"),
                 ),
@@ -55,8 +59,9 @@ class AnimeInfo extends StatelessWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.red),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.red,
+                      ),
                       child: SizedBox(
                         height: screenHeight * .45,
                         width: screenWidth * .8,
@@ -64,9 +69,7 @@ class AnimeInfo extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text("Anime Title"),
-                    SizedBox(
-                      height: 300,
-                    ),
+                    SizedBox(height: 300),
                     Text("Anime Title"),
                   ],
                 ),

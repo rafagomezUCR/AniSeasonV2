@@ -156,8 +156,7 @@ class AnimeSeasons extends ConsumerWidget {
                       crossAxisSpacing: 10,
                     ),
                     itemBuilder: (context, index) {
-                      return SeasonalCard(
-                          context, animeSeason[index].largeImageUrl);
+                      return SeasonalCard(context, animeSeason[index]);
                     },
                   );
                 },

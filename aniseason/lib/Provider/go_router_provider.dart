@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../Models/anime_model.dart';
+
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
     GlobalKey(debugLabel: 'shell');
@@ -20,9 +22,13 @@ final goRouterProvider = ChangeNotifierProvider<GoRouter>((ref) {
       GoRoute(
         path: '/animeInfo',
         name: animeInfo,
-        builder: (context, state) => AnimeInfo(
-          key: state.pageKey,
-        ),
+        builder: (context, state) {
+          AnimeModel anime = state.extra as AnimeModel;
+          return AnimeInfo(
+            key: state.pageKey,
+            anime: anime,
+          );
+        },
       ),
       ShellRoute(
         navigatorKey: _shellNavigator,
