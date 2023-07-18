@@ -4,18 +4,20 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-Widget scrollableCard(BuildContext context, String imageUrl) {
+import '../Models/anime_model.dart';
+
+Widget scrollableCard(BuildContext context, AnimeModel anime) {
   return Column(
     children: [
       GestureDetector(
-        onTap: () => context.push('/animeInfo'),
+        onTap: () => context.push('/animeInfo', extra: anime),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Container(
             height: 150,
             width: 110,
             color: Colors.transparent,
-            child: Image.network(imageUrl),
+            child: Image.network(anime.imageUrl),
           ),
         ),
       ),

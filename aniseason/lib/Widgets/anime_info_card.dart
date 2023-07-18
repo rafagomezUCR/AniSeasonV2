@@ -6,18 +6,19 @@ import 'package:go_router/go_router.dart';
 
 import '../Models/anime_model.dart';
 
-Widget animeInfoCard(BuildContext context, String title, double score,
-    int episodes, List<Genres> genres) {
+Widget animeInfoCard(BuildContext context, AnimeModel anime) {
+  double score = anime.score;
+  int episodes = anime.episodes;
   return Column(
     children: [
       GestureDetector(
-        onTap: () => context.push('/animeInfo'),
+        onTap: () => context.push('/animeInfo', extra: anime),
         child: Column(
           children: [
             Align(
               alignment: Alignment.topLeft,
               child: Text(
-                title,
+                anime.title,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style:
@@ -42,17 +43,18 @@ Widget animeInfoCard(BuildContext context, String title, double score,
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.red,
                     ),
-                    child: Text(genres[index].name),
+                    child: Text(anime.genres[index].name),
                   );
                 },
-                itemCount: genres.length,
+                itemCount: anime.genres.length,
               ),
             ),
             const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                  episodes != 0 ? "$episodes Episodes" : "Unknown Episodes"),
+              child: Text(anime.episodes != 0
+                  ? "$episodes Episodes"
+                  : "Unknown Episodes"),
             ),
           ],
         ),

@@ -71,7 +71,8 @@ class HomePage extends ConsumerWidget {
                                 animeData.map((e) => e).toList();
                             return GestureDetector(
                               onTap: () {
-                                context.push('/animeInfo');
+                                context.push('/animeInfo',
+                                    extra: topAnimeList[index]);
                               },
                               child: Container(
                                 margin:
@@ -129,8 +130,7 @@ class HomePage extends ConsumerWidget {
                             itemBuilder: (context, index) {
                               return Row(
                                 children: [
-                                  scrollableCard(
-                                      context, animeList[index].largeImageUrl),
+                                  scrollableCard(context, animeList[index]),
                                   const SizedBox(
                                     width: 20,
                                   ),
@@ -138,11 +138,7 @@ class HomePage extends ConsumerWidget {
                                     height: 150,
                                     width: screenWidth * 0.5,
                                     child: animeInfoCard(
-                                        context,
-                                        animeList[index].titleEnglish,
-                                        animeList[index].score,
-                                        animeList[index].episodes,
-                                        animeList[index].genres),
+                                        context, animeList[index]),
                                   ),
                                 ],
                               );

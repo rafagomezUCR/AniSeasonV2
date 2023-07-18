@@ -63,7 +63,8 @@ class AnimeModel {
       score = 0.0;
     }
     if (json['streaming'] == null) {
-      streaming = [];
+      Streaming s = Streaming(name: 'no streaming', url: 'what');
+      streaming = [s];
     } else {
       streaming = List<Streaming>.from(
           json['streaming'].map((x) => Streaming.fromJson(x)));

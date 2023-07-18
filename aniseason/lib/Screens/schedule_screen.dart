@@ -48,13 +48,13 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
     //var test = ref.watch(getSeasonProvider(Tuple2('2020', 'summer')));
     return Scaffold(
       appBar: AppBar(
-        title: Text("ANIME SCHEDULE"),
+        title: const Text("ANIME SCHEDULE"),
         backgroundColor: AppColors.ten,
         toolbarHeight: 100,
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             Container(
@@ -94,7 +94,7 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
                   );
                 },
                 loading: () {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 },

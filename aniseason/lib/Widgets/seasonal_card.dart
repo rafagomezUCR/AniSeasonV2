@@ -10,7 +10,7 @@ Widget SeasonalCard(BuildContext context, AnimeModel anime) {
   double screenWidth = MediaQuery.of(context).size.width;
   return GestureDetector(
     onTap: () {
-      context.push('/animeInfo');
+      context.push('/animeInfo', extra: anime);
     },
     child: Column(
       children: [
