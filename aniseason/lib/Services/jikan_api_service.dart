@@ -18,7 +18,7 @@ class JikanAPIService {
   }
 
   Future<List<AnimeModel>> searchAnime(String anime) async {
-    Response response = await get(Uri.parse('{$endpoint}anime?q=$anime&sfw'));
+    Response response = await get(Uri.parse('${endpoint}anime?q=$anime&sfw'));
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body)['data'];
       return result.map((e) => AnimeModel.fromJson(e)).toList();

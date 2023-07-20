@@ -95,7 +95,7 @@ class AnimeInfo extends StatelessWidget {
                           Text(
                             anime.titleEnglish ?? anime.titleJapanese,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -124,6 +124,13 @@ class AnimeInfo extends StatelessWidget {
                                   ),
                                 );
                               },
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            anime.rating == '' ? '-' : anime.rating,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -225,7 +232,7 @@ class AnimeInfo extends StatelessWidget {
                                 const Align(
                                   alignment: Alignment.topCenter,
                                   child: Text(
-                                    'Aired From',
+                                    'Aired',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -238,7 +245,7 @@ class AnimeInfo extends StatelessWidget {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Container(
                             height: 75,
                             padding: const EdgeInsets.all(15),
@@ -265,7 +272,11 @@ class AnimeInfo extends StatelessWidget {
                                     ),
                                     Align(
                                       alignment: Alignment.bottomCenter,
-                                      child: Text(anime.year.toString()),
+                                      child: Text(
+                                        anime.year.toString() == '0'
+                                            ? anime.aired
+                                            : anime.year.toString(),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -287,7 +298,9 @@ class AnimeInfo extends StatelessWidget {
                                     ),
                                     Align(
                                       alignment: Alignment.bottomCenter,
-                                      child: Text(anime.season),
+                                      child: Text(
+                                        anime.season == '' ? '-' : anime.season,
+                                      ),
                                     ),
                                   ],
                                 ),

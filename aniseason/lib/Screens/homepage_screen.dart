@@ -1,4 +1,5 @@
 import 'package:aniseason/Provider/api_service_provider.dart';
+import 'package:aniseason/Routes/named_routes.dart';
 import 'package:aniseason/Widgets/bottom_nav_bar.dart';
 import 'package:aniseason/Widgets/scrollable_card.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,11 +15,30 @@ import 'dart:ui' as ui;
 import '../Models/anime_model.dart';
 import '../Widgets/anime_info_card.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  late TextEditingController searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final topAnime = ref.watch(getTopAnimeProvider);
@@ -30,6 +50,10 @@ class HomePage extends ConsumerWidget {
         child: Column(
           children: [
             TextField(
+              onSubmitted: (value) {
+                context.push('/searchedAnime', extra: value);
+              },
+              controller: searchController,
               autocorrect: false,
               cursorColor: AppColors.darkText,
               style: const TextStyle(fontSize: 20),
@@ -51,7 +75,7 @@ class HomePage extends ConsumerWidget {
             Expanded(
               child: Column(
                 children: [
-                  Text("TOP ANIME"),
+                  const Text("TOP ANIME"),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
                     child: CarouselSlider.builder(

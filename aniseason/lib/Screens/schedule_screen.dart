@@ -43,9 +43,7 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    //final day = ref.watch(selectedDayProvider);
     final dailyScheduledAnime = ref.watch(weeklyScheduleProvider);
-    //var test = ref.watch(getSeasonProvider(Tuple2('2020', 'summer')));
     return Scaffold(
       appBar: AppBar(
         title: const Text("ANIME SCHEDULE"),

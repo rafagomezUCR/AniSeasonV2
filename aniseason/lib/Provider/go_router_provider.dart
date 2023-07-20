@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Models/anime_model.dart';
+import '../Screens/search_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
@@ -27,6 +28,17 @@ final goRouterProvider = ChangeNotifierProvider<GoRouter>((ref) {
           return AnimeInfo(
             key: state.pageKey,
             anime: anime,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/searchedAnime',
+        name: searchedAnime,
+        builder: (context, state) {
+          String searchedAnime = state.extra as String;
+          return SearchedAnime(
+            key: state.pageKey,
+            searchedAnime: searchedAnime,
           );
         },
       ),
