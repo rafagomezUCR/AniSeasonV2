@@ -63,18 +63,24 @@ class AnimeSeasons extends ConsumerWidget {
     final selectedSeasonYear = ref.watch(animeSeasonProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("ANIME SEASONS"),
-        centerTitle: true,
-        toolbarHeight: 100,
-        backgroundColor: AppColors.ten,
-      ),
       body: Container(
-        margin:
-            EdgeInsets.fromLTRB(screenWidth * 0.05, 10, screenWidth * 0.05, 0),
+        margin: EdgeInsets.fromLTRB(10, 60, 10, 0),
         alignment: Alignment.topCenter,
         child: Column(
           children: [
+            const Text(
+              "ANIME SEASONS",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const Divider(
+              height: 30,
+              color: Colors.black,
+              thickness: 1,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -148,6 +154,7 @@ class AnimeSeasons extends ConsumerWidget {
                   List<AnimeModel> animeSeason =
                       animeData.map((e) => e).toList();
                   return GridView.builder(
+                    padding: EdgeInsets.zero,
                     itemCount: animeData.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,

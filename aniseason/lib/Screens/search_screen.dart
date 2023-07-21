@@ -61,12 +61,13 @@ class SearchedAnime extends ConsumerWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 50),
             Flexible(
               child: anime.when(
                 data: (animeData) {
                   List<AnimeModel> animeList = animeData.map((e) => e).toList();
                   return GridView.builder(
+                    padding: EdgeInsets.zero,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisExtent: screenHeight * 0.3,
