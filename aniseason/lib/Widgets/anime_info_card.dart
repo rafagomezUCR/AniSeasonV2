@@ -32,19 +32,12 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              height: 25,
+              height: 20,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 separatorBuilder: (context, index) => const SizedBox(width: 10),
                 itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.red,
-                    ),
-                    child: Text(anime.genres[index].name),
-                  );
+                  return Text(anime.genres[index].name);
                 },
                 itemCount: anime.genres.length,
               ),

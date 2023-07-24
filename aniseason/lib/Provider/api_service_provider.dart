@@ -78,8 +78,7 @@ final animeSeasonProvider = Provider.autoDispose<AsyncValue<List<AnimeModel>>>(
   },
 );
 
-final weeklyScheduleProvider =
-    Provider.autoDispose<AsyncValue<List<AnimeModel>>>(
+final weeklyScheduleProvider = Provider<AsyncValue<List<AnimeModel>>>(
   (ref) {
     final day = ref.read(selectedDayProvider);
     return ref.watch(getScheduleProvider(day));

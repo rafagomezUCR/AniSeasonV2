@@ -19,12 +19,6 @@ class AnimeInfo extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            colors: [AppColors.ten, AppColors.thirty],
-            radius: 0.8,
-          ),
-        ),
         padding: const EdgeInsets.fromLTRB(30, 50, 30, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -45,9 +39,9 @@ class AnimeInfo extends StatelessWidget {
                       backgroundColor: MaterialStateProperty.resolveWith(
                         (states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return AppColors.thirty;
-                          } else {
                             return AppColors.ten;
+                          } else {
+                            return AppColors.thirty;
                           }
                         },
                       ),
@@ -72,7 +66,6 @@ class AnimeInfo extends StatelessWidget {
                     Container(
                       height: screenHeight * 0.5,
                       decoration: BoxDecoration(
-                        border: Border.all(width: 5, color: AppColors.thirty),
                         borderRadius: BorderRadius.circular(20),
                         image: DecorationImage(
                           image: NetworkImage(anime.largeImageUrl),
@@ -85,9 +78,9 @@ class AnimeInfo extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(10, 5, 10, 20),
                       width: screenWidth,
                       decoration: BoxDecoration(
-                        border: Border.all(width: 5, color: AppColors.thirty),
+                        border: Border.all(width: 4, color: AppColors.thirty),
                         borderRadius: BorderRadius.circular(20),
-                        color: AppColors.lightText,
+                        color: AppColors.sixty,
                       ),
                       child: Column(
                         children: [
@@ -141,7 +134,7 @@ class AnimeInfo extends StatelessWidget {
                               border:
                                   Border.all(width: 5, color: AppColors.thirty),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.lightText,
+                              color: AppColors.sixty,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -225,7 +218,7 @@ class AnimeInfo extends StatelessWidget {
                               border:
                                   Border.all(width: 5, color: AppColors.thirty),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.lightText,
+                              color: AppColors.sixty,
                             ),
                             child: Stack(
                               children: [
@@ -253,7 +246,7 @@ class AnimeInfo extends StatelessWidget {
                               border:
                                   Border.all(width: 5, color: AppColors.thirty),
                               borderRadius: BorderRadius.circular(20),
-                              color: AppColors.lightText,
+                              color: AppColors.sixty,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -326,12 +319,6 @@ class AnimeInfo extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(10),
                             width: screenWidth,
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 5, color: AppColors.thirty),
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColors.lightText,
-                            ),
                             child: Text(
                               anime.synopsis,
                               textAlign: TextAlign.center,

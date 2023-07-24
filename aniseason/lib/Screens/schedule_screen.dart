@@ -19,7 +19,7 @@ class AnimeSchedule extends ConsumerStatefulWidget {
 class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
   late String currentDay;
 
-  List<Text> days = [
+  static const List<Text> days = [
     Text('sunday'),
     Text('monday'),
     Text('tuesday'),
@@ -44,27 +44,36 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final dailyScheduledAnime = ref.watch(weeklyScheduleProvider);
+    ref.watch(selectedDayProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("ANIME SCHEDULE"),
-        backgroundColor: AppColors.ten,
-        toolbarHeight: 100,
-        centerTitle: true,
-      ),
       body: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
         child: Column(
           children: [
-            Container(
+            const Text(
+              "ANIME SCHEDULE",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            Divider(
+              height: 30,
+              color: AppColors.thirty,
+              thickness: 1,
+            ),
+            SizedBox(
               height: 50,
               child: ListView.separated(
                 separatorBuilder: (context, index) {
-                  return const SizedBox(width: 5);
+                  return const SizedBox(width: 10);
                 },
+                padding: const EdgeInsets.all(2),
                 scrollDirection: Axis.horizontal,
                 itemCount: days.length,
                 itemBuilder: (context, index) {
-                  return WeeklyAnimeButton(context, indexToDay[index]!, ref);
+                  return weeklyAnimeButton(context, indexToDay[index]!, ref);
                 },
               ),
             ),
@@ -82,7 +91,7 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
                       crossAxisSpacing: 10,
                     ),
                     itemBuilder: (context, index) {
-                      return SeasonalCard(context, animeList[index]);
+                      return seasonalCard(context, animeList[index]);
                     },
                     itemCount: animeList.length,
                   );

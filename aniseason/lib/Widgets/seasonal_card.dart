@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../Models/anime_model.dart';
 
-Widget SeasonalCard(BuildContext context, AnimeModel anime) {
+Widget seasonalCard(BuildContext context, AnimeModel anime) {
   double screenHeight = MediaQuery.of(context).size.height;
   double screenWidth = MediaQuery.of(context).size.width;
   return GestureDetector(

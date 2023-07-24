@@ -17,7 +17,7 @@ class MyApp extends ConsumerWidget {
       routeInformationProvider: router.routeInformationProvider,
       routerDelegate: router.routerDelegate,
       title: 'Flutter Demo',
-      theme: ThemeData(scaffoldBackgroundColor: AppColors.thirty),
+      theme: ThemeData(scaffoldBackgroundColor: AppColors.sixty),
     );
   }
 }

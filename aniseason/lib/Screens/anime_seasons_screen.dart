@@ -27,13 +27,16 @@ class AnimeSeasons extends ConsumerWidget {
         [
           DropdownMenuItem<String>(
             value: item,
-            child: Text(item),
+            child: Text(
+              item,
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           if (item != items.last)
             DropdownMenuItem<String>(
               enabled: false,
               child: Divider(
-                color: AppColors.ten,
+                color: Colors.black,
               ),
             ),
         ],
@@ -64,7 +67,7 @@ class AnimeSeasons extends ConsumerWidget {
 
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.fromLTRB(10, 60, 10, 0),
+        margin: EdgeInsets.fromLTRB(20, 60, 20, 0),
         alignment: Alignment.topCenter,
         child: Column(
           children: [
@@ -76,9 +79,9 @@ class AnimeSeasons extends ConsumerWidget {
                 color: Colors.black,
               ),
             ),
-            const Divider(
+            Divider(
               height: 30,
-              color: Colors.black,
+              color: AppColors.thirty,
               thickness: 1,
             ),
             Row(
@@ -87,14 +90,12 @@ class AnimeSeasons extends ConsumerWidget {
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
                     buttonDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.lightText),
-                      color: AppColors.ten,
+                      color: AppColors.thirty,
                     ),
                     value: selectedSeason,
                     iconEnabledColor: Colors.white,
                     dropdownDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.thirty,
                     ),
                     customItemsHeights: _customMenuItemHeights(_seasonList),
                     onChanged: (value) => {
@@ -106,15 +107,13 @@ class AnimeSeasons extends ConsumerWidget {
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
                     buttonDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.lightText),
-                      color: AppColors.ten,
+                      color: AppColors.thirty,
                     ),
                     value: selectedYear,
                     dropdownMaxHeight: 200,
                     iconEnabledColor: Colors.white,
                     dropdownDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.thirty,
                     ),
                     customItemsHeights: _customMenuItemHeights(_yearsList),
                     onChanged: (value) => {
@@ -126,19 +125,19 @@ class AnimeSeasons extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 20),
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 ref.invalidate(animeSeasonProvider);
               },
               style: TextButton.styleFrom(
-                backgroundColor: AppColors.ten,
+                backgroundColor: AppColors.thirty,
                 foregroundColor: Colors.black,
                 padding: const EdgeInsets.all(15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Submit',
                 style: TextStyle(
                   color: Colors.white,
@@ -163,7 +162,7 @@ class AnimeSeasons extends ConsumerWidget {
                       crossAxisSpacing: 10,
                     ),
                     itemBuilder: (context, index) {
-                      return SeasonalCard(context, animeSeason[index]);
+                      return seasonalCard(context, animeSeason[index]);
                     },
                   );
                 },

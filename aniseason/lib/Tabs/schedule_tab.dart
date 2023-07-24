@@ -11,10 +11,10 @@ class ScheduleTab extends StatefulWidget {
 class _ScheduleTabState extends State<ScheduleTab> {
   @override
   Widget build(BuildContext context) {
-    return Tab(
+    return const Tab(
       child: Text(
         "W",
-        style: TextStyle(color: AppColors.darkText),
+        style: TextStyle(color: Colors.black),
       ),
     );
   }

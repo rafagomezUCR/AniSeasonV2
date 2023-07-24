@@ -19,35 +19,41 @@ class _BottomNavBarState extends ConsumerState<BottomNavBar> {
   Widget build(BuildContext context) {
     final index = ref.watch(dashboardControllerProvider);
     return Container(
-      color: AppColors.thirty,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-        child: GNav(
-          selectedIndex: index,
-          backgroundColor: AppColors.thirty,
-          color: AppColors.darkText,
-          activeColor: AppColors.lightText,
-          tabBackgroundColor: AppColors.ten,
-          padding: const EdgeInsets.all(12),
-          gap: 10,
-          tabs: const [
-            GButton(
-              icon: Icons.home,
-              iconSize: 30,
-              text: "home",
-            ),
-            GButton(
-              icon: Icons.ac_unit,
-              iconSize: 30,
-              text: "Seasons",
-            ),
-            GButton(
-              icon: Icons.calendar_month,
-              iconSize: 30,
-              text: "Schedule",
-            ),
-          ],
-          onTabChange: (value) => _onTabChange(value),
+      padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: AppColors.thirty,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: GNav(
+            selectedIndex: index,
+            backgroundColor: AppColors.thirty,
+            color: Colors.white,
+            activeColor: AppColors.ten,
+            tabBackgroundColor: AppColors.thirty,
+            padding: const EdgeInsets.all(12),
+            gap: 10,
+            tabs: const [
+              GButton(
+                icon: Icons.home,
+                iconSize: 30,
+                text: "home",
+              ),
+              GButton(
+                icon: Icons.ac_unit,
+                iconSize: 30,
+                text: "Seasons",
+              ),
+              GButton(
+                icon: Icons.calendar_month,
+                iconSize: 30,
+                text: "Schedule",
+              ),
+            ],
+            onTabChange: (value) => _onTabChange(value),
+          ),
         ),
       ),
     );

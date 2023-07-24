@@ -18,7 +18,7 @@ class SearchedAnime extends ConsumerWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
+        padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
         child: Column(
           children: [
             Stack(
@@ -37,9 +37,9 @@ class SearchedAnime extends ConsumerWidget {
                       backgroundColor: MaterialStateProperty.resolveWith(
                         (states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return AppColors.thirty;
-                          } else {
                             return AppColors.ten;
+                          } else {
+                            return AppColors.thirty;
                           }
                         },
                       ),
@@ -75,7 +75,7 @@ class SearchedAnime extends ConsumerWidget {
                       crossAxisSpacing: 10,
                     ),
                     itemBuilder: (context, index) {
-                      return SeasonalCard(context, animeList[index]);
+                      return seasonalCard(context, animeList[index]);
                     },
                     itemCount: animeList.length,
                   );
