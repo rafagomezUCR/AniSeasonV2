@@ -1,3 +1,4 @@
+import 'package:aniseason/Styles/appcolors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -19,7 +20,7 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
               alignment: Alignment.topLeft,
               child: Text(
                 anime.title,
-                maxLines: 3,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
@@ -28,26 +29,56 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
             const SizedBox(height: 10),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('$score / 10.0  MAL'),
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                height: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.thirty,
+                ),
+                child: Text('$score / 10.0  MAL',
+                    style: const TextStyle(color: Colors.white)),
+              ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             SizedBox(
-              height: 20,
+              height: 30,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 separatorBuilder: (context, index) => const SizedBox(width: 10),
                 itemBuilder: (context, index) {
-                  return Text(anime.genres[index].name);
+                  return Container(
+                    padding: const EdgeInsets.all(5),
+                    height: 20,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.thirty,
+                    ),
+                    child: Text(
+                      anime.genres[index].name,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  );
                 },
                 itemCount: anime.genres.length,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text(anime.episodes != 0
-                  ? "$episodes Episodes"
-                  : "Unknown Episodes"),
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                height: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.thirty,
+                ),
+                child: Text(
+                    anime.episodes != 0
+                        ? "$episodes Episodes"
+                        : "Unknown Episodes",
+                    style: const TextStyle(color: Colors.white)),
+              ),
             ),
           ],
         ),
