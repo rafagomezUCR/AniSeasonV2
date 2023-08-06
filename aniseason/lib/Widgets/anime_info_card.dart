@@ -26,18 +26,25 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                padding: const EdgeInsets.all(6),
                 height: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.thirty,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.star,
+                      size: 16,
+                      color: AppColors.thirty,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      anime.score == 0.0 ? 'N/A' : '$score / 10.0  MAL',
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  ],
                 ),
-                child: Text('$score / 10.0  MAL',
-                    style: const TextStyle(color: Colors.white)),
               ),
             ),
             const SizedBox(height: 5),
@@ -45,18 +52,15 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
               height: 30,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) => const SizedBox(width: 10),
+                separatorBuilder: (context, index) => const SizedBox(width: 0),
                 itemBuilder: (context, index) {
                   return Container(
                     padding: const EdgeInsets.all(5),
-                    height: 20,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.thirty,
-                    ),
                     child: Text(
-                      anime.genres[index].name,
-                      style: const TextStyle(color: Colors.white),
+                      index != anime.genres.length - 1
+                          ? anime.genres[index].name + ','
+                          : anime.genres[index].name,
+                      style: const TextStyle(color: Colors.black),
                     ),
                   );
                 },
@@ -68,16 +72,11 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
               alignment: Alignment.centerLeft,
               child: Container(
                 padding: const EdgeInsets.all(6),
-                height: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.thirty,
-                ),
                 child: Text(
                     anime.episodes != 0
                         ? "$episodes Episodes"
                         : "Unknown Episodes",
-                    style: const TextStyle(color: Colors.white)),
+                    style: const TextStyle(color: Colors.black)),
               ),
             ),
           ],

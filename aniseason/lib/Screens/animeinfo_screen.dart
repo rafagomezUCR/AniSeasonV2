@@ -86,7 +86,7 @@ class AnimeInfo extends StatelessWidget {
                         children: [
                           const SizedBox(height: 20),
                           Text(
-                            anime.titleEnglish ?? anime.titleJapanese,
+                            anime.titleEnglish,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontSize: 20,

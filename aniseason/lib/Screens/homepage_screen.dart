@@ -76,7 +76,13 @@ class _HomePageState extends ConsumerState<HomePage> {
             Expanded(
               child: Column(
                 children: [
-                  const Text("TOP ANIME"),
+                  const Text(
+                    "TOP ANIME",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
                     child: CarouselSlider.builder(
@@ -153,19 +159,30 @@ class _HomePageState extends ConsumerState<HomePage> {
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
-                              return Row(
-                                children: [
-                                  scrollableCard(context, animeList[index]),
-                                  const SizedBox(
-                                    width: 20,
+                              return Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [AppColors.sixty, AppColors.thirty],
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
                                   ),
-                                  SizedBox(
-                                    height: 150,
-                                    width: screenWidth * 0.5,
-                                    child: animeInfoCard(
-                                        context, animeList[index]),
-                                  ),
-                                ],
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  children: [
+                                    scrollableCard(context, animeList[index]),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                      height: 150,
+                                      width: screenWidth * 0.5,
+                                      child: animeInfoCard(
+                                          context, animeList[index]),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );
