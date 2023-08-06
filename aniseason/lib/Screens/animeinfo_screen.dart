@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:aniseason/Styles/appcolors.dart';
+import 'package:aniseason/Widgets/anime_details_image_card.dart';
+import 'package:aniseason/Widgets/scrollable_card.dart';
+import 'package:aniseason/Widgets/seasonal_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -63,269 +66,171 @@ class AnimeInfo extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
-                      height: screenHeight * 0.5,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                          image: NetworkImage(anime.largeImageUrl),
-                          fit: BoxFit.fill,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        animeDetailsCard(context, anime),
+                        Column(
+                          children: [
+                            Container(
+                              height: 90,
+                              width: 120,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: AppColors.sixty,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Icon(
+                                      Icons.stars_rounded,
+                                      color: AppColors.thirty,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Text(anime.score == 0.0
+                                        ? 'N/A'
+                                        : '${anime.score} / 10'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            Container(
+                              height: 90,
+                              width: 120,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: AppColors.sixty,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Icon(
+                                      anime.type == 'TV'
+                                          ? Icons.ac_unit
+                                          : Icons.calendar_month,
+                                      color: AppColors.thirty,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Text(anime.type == 'TV'
+                                        ? '${anime.year} ${anime.season}'
+                                        : anime.aired),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            Container(
+                              height: 90,
+                              width: 120,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: AppColors.sixty,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Icon(
+                                      Icons.access_time,
+                                      color: AppColors.thirty,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Text(anime.type == 'TV'
+                                        ? '${anime.episodes} Episodes'
+                                        : anime.duration),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      anime.titleEnglish,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 20),
-                      width: screenWidth,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 4, color: AppColors.thirty),
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.sixty,
-                      ),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 20),
-                          Text(
-                            anime.titleEnglish,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          SizedBox(
-                            height: 20,
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(
-                                  width: 15,
-                                  child: Icon(
-                                    Icons.circle,
-                                    size: 3,
-                                  ),
-                                );
-                              },
-                              scrollDirection: Axis.horizontal,
-                              itemCount: anime.genres.length,
-                              itemBuilder: (context, index) {
-                                return Text(
-                                  anime.genres[index].name,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            anime.rating == '' ? '-' : anime.rating,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Container(
-                            height: 75,
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 5, color: AppColors.thirty),
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColors.sixty,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: [
-                                    const Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Text(
-                                        'Type',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                    Divider(
+                      height: 20,
+                      color: AppColors.thirty,
+                    ),
+                    SizedBox(
+                        height: 20,
+                        child: anime.genres.isNotEmpty
+                            ? ListView.separated(
+                                shrinkWrap: true,
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(
+                                    width: 15,
+                                    child: Icon(
+                                      Icons.circle,
+                                      size: 3,
                                     ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Text(anime.type),
-                                    ),
-                                  ],
-                                ),
-                                VerticalDivider(
-                                  thickness: 3,
-                                  color: AppColors.thirty,
-                                ),
-                                Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: [
-                                    const Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Text(
-                                        'Source',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Text(anime.source),
-                                    ),
-                                  ],
-                                ),
-                                VerticalDivider(
-                                  thickness: 3,
-                                  color: AppColors.thirty,
-                                ),
-                                Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: [
-                                    const Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Text(
-                                        'Episodes',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Text(
-                                        anime.episodes == 0
-                                            ? 'Unknown'
-                                            : anime.episodes.toString(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            alignment: Alignment.center,
-                            width: double.infinity,
-                            height: 75,
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 5, color: AppColors.thirty),
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColors.sixty,
-                            ),
-                            child: Stack(
-                              children: [
-                                const Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Text(
-                                    'Aired',
-                                    style: TextStyle(
+                                  );
+                                },
+                                scrollDirection: Axis.horizontal,
+                                itemCount: anime.genres.length,
+                                itemBuilder: (context, index) {
+                                  return Text(
+                                    anime.genres[index].name,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Text(anime.aired),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            height: 75,
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 5, color: AppColors.thirty),
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColors.sixty,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: [
-                                    const Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Text(
-                                        'Year',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Text(
-                                        anime.year.toString() == '0'
-                                            ? anime.aired
-                                            : anime.year.toString(),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                VerticalDivider(
-                                  thickness: 3,
-                                  color: AppColors.thirty,
-                                ),
-                                Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: [
-                                    const Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Text(
-                                        'Season',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Text(
-                                        anime.season == '' ? '-' : anime.season,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          SizedBox(
-                            height: 20,
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return Text("S");
-                              },
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(width: 15);
-                              },
-                              itemCount: anime.streaming.length,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            width: screenWidth,
-                            child: Text(
-                              anime.synopsis,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
+                                  );
+                                },
+                              )
+                            : const Text('-')),
+                    Divider(
+                      height: 20,
+                      color: AppColors.thirty,
+                    ),
+                    Text(
+                      anime.rating == '' ? '-' : anime.rating,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
+                    ),
+                    Divider(
+                      height: 30,
+                      color: AppColors.thirty,
+                    ),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'SYNOPSIS',
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(anime.synopsis.isEmpty
+                          ? 'No synopsis information has been provided'
+                          : anime.synopsis),
                     ),
                   ],
                 ),

@@ -29,7 +29,7 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
             const SizedBox(height: 5),
             Align(
               alignment: Alignment.centerLeft,
-              child: Container(
+              child: SizedBox(
                 height: 30,
                 child: Row(
                   children: [
@@ -55,7 +55,7 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
                 separatorBuilder: (context, index) => const SizedBox(width: 0),
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: const EdgeInsets.all(5),
+                    padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
                     child: Text(
                       index != anime.genres.length - 1
                           ? anime.genres[index].name + ','
@@ -71,12 +71,10 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
             Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                padding: const EdgeInsets.all(6),
                 child: Text(
-                    anime.episodes != 0
-                        ? "$episodes Episodes"
-                        : "Unknown Episodes",
-                    style: const TextStyle(color: Colors.black)),
+                  anime.type == 'TV' ? '${anime.type} Show' : anime.type,
+                  style: const TextStyle(color: Colors.black),
+                ),
               ),
             ),
           ],

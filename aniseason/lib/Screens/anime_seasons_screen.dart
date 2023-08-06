@@ -90,11 +90,13 @@ class AnimeSeasons extends ConsumerWidget {
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
                     buttonDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
                       color: AppColors.thirty,
                     ),
                     value: selectedSeason,
                     iconEnabledColor: Colors.white,
                     dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
                       color: AppColors.thirty,
                     ),
                     customItemsHeights: _customMenuItemHeights(_seasonList),
@@ -107,12 +109,14 @@ class AnimeSeasons extends ConsumerWidget {
                 DropdownButtonHideUnderline(
                   child: DropdownButton2(
                     buttonDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
                       color: AppColors.thirty,
                     ),
                     value: selectedYear,
                     dropdownMaxHeight: 200,
                     iconEnabledColor: Colors.white,
                     dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
                       color: AppColors.thirty,
                     ),
                     customItemsHeights: _customMenuItemHeights(_yearsList),
@@ -137,7 +141,7 @@ class AnimeSeasons extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'Submit',
                 style: TextStyle(
                   color: Colors.white,

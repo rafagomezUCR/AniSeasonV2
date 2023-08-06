@@ -66,9 +66,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                suffixIcon: Icon(
-                  Icons.search,
-                  color: AppColors.ten,
+                suffixIcon: GestureDetector(
+                  child: Icon(
+                    Icons.search,
+                    color: AppColors.ten,
+                  ),
+                  onTap: () {
+                    if (searchController.text != '') {
+                      context.push('/searchedAnime',
+                          extra: searchController.value.text);
+                    }
+                  },
                 ),
               ),
             ),
@@ -146,7 +154,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                       child: currentSeason.when(
                         data: (animeData) {
                           List<AnimeModel> animeList =
@@ -160,15 +167,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
                               return Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [AppColors.sixty, AppColors.thirty],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
                                 child: Row(
                                   children: [
                                     scrollableCard(context, animeList[index]),
