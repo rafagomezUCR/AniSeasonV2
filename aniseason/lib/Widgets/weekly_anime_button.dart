@@ -14,7 +14,12 @@ Widget weeklyAnimeButton(BuildContext context, String day, WidgetRef ref) {
     style: ButtonStyle(
       elevation: MaterialStateProperty.all(2),
       shadowColor: MaterialStateProperty.all(AppColors.ten),
-      backgroundColor: MaterialStateProperty.all(AppColors.thirty),
+      backgroundColor: MaterialStateProperty.resolveWith((states) {
+        if (ref.read(selectedDayProvider) == day) {
+          return AppColors.thirty.withOpacity(0.5);
+        }
+        return AppColors.thirty;
+      }),
       shape: MaterialStateProperty.all(
         const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
