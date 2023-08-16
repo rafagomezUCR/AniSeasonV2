@@ -1,15 +1,11 @@
 import 'package:aniseason/Styles/appcolors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Models/anime_model.dart';
 
 Widget animeInfoCard(BuildContext context, AnimeModel anime) {
   double score = anime.score;
-  int episodes = anime.episodes;
   return Column(
     children: [
       GestureDetector(
@@ -55,10 +51,10 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
                 separatorBuilder: (context, index) => const SizedBox(width: 0),
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                     child: Text(
                       index != anime.genres.length - 1
-                          ? anime.genres[index].name + ','
+                          ? '${anime.genres[index].name},'
                           : anime.genres[index].name,
                       style: const TextStyle(color: Colors.black),
                     ),
@@ -70,11 +66,9 @@ Widget animeInfoCard(BuildContext context, AnimeModel anime) {
             const SizedBox(height: 5),
             Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                child: Text(
-                  anime.type == 'TV' ? '${anime.type} Show' : anime.type,
-                  style: const TextStyle(color: Colors.black),
-                ),
+              child: Text(
+                anime.type == 'TV' ? '${anime.type} Show' : anime.type,
+                style: const TextStyle(color: Colors.black),
               ),
             ),
           ],

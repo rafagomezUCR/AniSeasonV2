@@ -1,16 +1,11 @@
-import 'dart:math';
-
 import 'package:aniseason/Provider/api_service_provider.dart';
 import 'package:aniseason/Styles/appcolors.dart';
 import 'package:aniseason/Widgets/seasonal_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tuple/tuple.dart';
 
-import '../Models/anime_model.dart';
+import '../../Models/anime_model.dart';
 
 class AnimeSeasons extends ConsumerWidget {
   AnimeSeasons({super.key});
@@ -29,11 +24,11 @@ class AnimeSeasons extends ConsumerWidget {
             value: item,
             child: Text(
               item,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
           if (item != items.last)
-            DropdownMenuItem<String>(
+            const DropdownMenuItem<String>(
               enabled: false,
               child: Divider(
                 color: Colors.black,
@@ -60,14 +55,13 @@ class AnimeSeasons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
     String selectedSeason = ref.watch(selectedSeasonProvider);
     String selectedYear = ref.watch(selectedYearProvider);
     final selectedSeasonYear = ref.watch(animeSeasonProvider);
 
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.fromLTRB(20, 60, 20, 0),
+        margin: const EdgeInsets.fromLTRB(20, 60, 20, 0),
         alignment: Alignment.topCenter,
         child: Column(
           children: [

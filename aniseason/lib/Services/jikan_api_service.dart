@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:aniseason/Models/anime_model.dart';
 import 'package:http/http.dart';

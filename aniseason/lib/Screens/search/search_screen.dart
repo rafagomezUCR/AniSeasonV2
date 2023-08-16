@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Models/anime_model.dart';
-import '../Styles/appcolors.dart';
+import '../../Models/anime_model.dart';
+import '../../Styles/appcolors.dart';
 
 class SearchedAnime extends ConsumerWidget {
   const SearchedAnime({super.key, required this.searchedAnime});

@@ -2,7 +2,6 @@ import 'package:aniseason/Provider/go_router_provider.dart';
 import 'package:aniseason/Styles/appcolors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'Screens/homepage_screen.dart';
 
 void main() => runApp(const ProviderScope(child: MyApp()));
 

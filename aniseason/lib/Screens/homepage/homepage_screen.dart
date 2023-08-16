@@ -1,19 +1,13 @@
 import 'package:aniseason/Provider/api_service_provider.dart';
-import 'package:aniseason/Routes/named_routes.dart';
-import 'package:aniseason/Widgets/bottom_nav_bar.dart';
 import 'package:aniseason/Widgets/scrollable_card.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:aniseason/Styles/appcolors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:tuple/tuple.dart';
-import 'dart:ui' as ui;
 
-import '../Models/anime_model.dart';
-import '../Widgets/anime_info_card.dart';
+import '../../Models/anime_model.dart';
+import '../../Widgets/anime_info_card.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -166,21 +160,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
-                              return Container(
-                                child: Row(
-                                  children: [
-                                    scrollableCard(context, animeList[index]),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    SizedBox(
-                                      height: 150,
-                                      width: screenWidth * 0.5,
-                                      child: animeInfoCard(
-                                          context, animeList[index]),
-                                    ),
-                                  ],
-                                ),
+                              return Row(
+                                children: [
+                                  scrollableCard(context, animeList[index]),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  SizedBox(
+                                    height: 150,
+                                    width: screenWidth * 0.5,
+                                    child: animeInfoCard(
+                                        context, animeList[index]),
+                                  ),
+                                ],
                               );
                             },
                           );

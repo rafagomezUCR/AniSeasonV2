@@ -1,5 +1,4 @@
 import 'package:aniseason/Provider/dashboard_controller_provider.dart';
-import 'package:aniseason/Provider/go_router_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +18,7 @@ class _BottomNavBarState extends ConsumerState<BottomNavBar> {
   Widget build(BuildContext context) {
     final index = ref.watch(dashboardControllerProvider);
     return Container(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),

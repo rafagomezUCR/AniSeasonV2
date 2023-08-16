@@ -1,15 +1,9 @@
-import 'dart:math';
-
 import 'package:aniseason/Styles/appcolors.dart';
 import 'package:aniseason/Widgets/anime_details_image_card.dart';
-import 'package:aniseason/Widgets/scrollable_card.dart';
-import 'package:aniseason/Widgets/seasonal_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Models/anime_model.dart';
+import '../../Models/anime_model.dart';
 
 class AnimeInfo extends StatelessWidget {
   const AnimeInfo({super.key, required this.anime});
@@ -18,8 +12,6 @@ class AnimeInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.fromLTRB(30, 50, 30, 0),
@@ -228,9 +220,11 @@ class AnimeInfo extends StatelessWidget {
                     const SizedBox(height: 20),
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(anime.synopsis.isEmpty
-                          ? 'No synopsis information has been provided'
-                          : anime.synopsis),
+                      child: Text(
+                        anime.synopsis.isEmpty
+                            ? 'No synopsis information has been provided'
+                            : anime.synopsis,
+                      ),
                     ),
                   ],
                 ),

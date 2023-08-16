@@ -4,10 +4,8 @@ import 'package:aniseason/Widgets/seasonal_card.dart';
 import 'package:aniseason/Widgets/weekly_anime_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:tuple/tuple.dart';
 
-import '../Models/anime_model.dart';
+import '../../Models/anime_model.dart';
 
 class AnimeSchedule extends ConsumerStatefulWidget {
   const AnimeSchedule({super.key});
@@ -42,7 +40,6 @@ class _AnimeScheduleState extends ConsumerState<AnimeSchedule> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
     final dailyScheduledAnime = ref.watch(weeklyScheduleProvider);
     ref.watch(selectedDayProvider);
     return Scaffold(

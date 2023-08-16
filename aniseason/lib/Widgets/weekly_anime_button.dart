@@ -3,8 +3,6 @@ import 'package:aniseason/Styles/appcolors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../Models/anime_model.dart';
-
 Widget weeklyAnimeButton(BuildContext context, String day, WidgetRef ref) {
   return ElevatedButton(
     onPressed: () async {
