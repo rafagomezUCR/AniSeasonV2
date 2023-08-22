@@ -3,7 +3,7 @@ import 'package:aniseason/Styles/appcolors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-Widget weeklyAnimeButton(BuildContext context, String day, WidgetRef ref) {
+Widget scheduleWeeklyButtons(BuildContext context, String day, WidgetRef ref) {
   return ElevatedButton(
     onPressed: () async {
       ref.read(selectedDayProvider.notifier).update((state) => day);

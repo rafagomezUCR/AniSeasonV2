@@ -1,13 +1,9 @@
 import 'package:aniseason/Provider/api_service_provider.dart';
-import 'package:aniseason/Widgets/scrollable_card.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:aniseason/Screens/homepage/HomePageWidgets/homepage_anime_listview.dart';
+import 'package:aniseason/Screens/homepage/HomePageWidgets/homepage_carousel_slider.dart';
+import 'package:aniseason/Screens/homepage/HomePageWidgets/homepage_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:aniseason/Styles/appcolors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../Models/anime_model.dart';
-import '../../Widgets/anime_info_card.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -43,37 +39,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             screenWidth * 0.05, screenHeight * 0.07, screenWidth * 0.05, 0),
         child: Column(
           children: [
-            TextField(
-              onSubmitted: (value) {
-                context.push('/searchedAnime', extra: value);
-              },
-              controller: searchController,
-              autocorrect: false,
-              cursorColor: AppColors.ten,
-              style: const TextStyle(fontSize: 20, color: Colors.white),
-              decoration: InputDecoration(
-                hintText: "Search for Anime...",
-                hintStyle: const TextStyle(color: Colors.white),
-                filled: true,
-                fillColor: AppColors.thirty,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                suffixIcon: GestureDetector(
-                  child: Icon(
-                    Icons.search,
-                    color: AppColors.ten,
-                  ),
-                  onTap: () {
-                    if (searchController.text != '') {
-                      context.push('/searchedAnime',
-                          extra: searchController.value.text);
-                    }
-                  },
-                ),
-              ),
-            ),
+            homepageTextField(context, searchController),
             const SizedBox(height: 10),
             Expanded(
               child: Column(
@@ -87,53 +53,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 20),
-                    child: CarouselSlider.builder(
-                      itemCount: 5,
-                      options: CarouselOptions(
-                        height: screenHeight * 0.3,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 7),
-                        autoPlayAnimationDuration:
-                            const Duration(milliseconds: 500),
-                        enlargeCenterPage: true,
-                      ),
-                      itemBuilder: (context, index, realIndex) {
-                        return topAnime.when(
-                          data: (animeData) {
-                            List<AnimeModel> topAnimeList =
-                                animeData.map((e) => e).toList();
-                            return GestureDetector(
-                              onTap: () {
-                                context.push('/animeInfo',
-                                    extra: topAnimeList[index]);
-                              },
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 5.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        topAnimeList[index].largeImageUrl),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          error: (err, stackTrace) {
-                            return Center(
-                              child: Text(err.toString()),
-                            );
-                          },
-                          loading: () {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                    child: homepageCarouselSlider(context, topAnime),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(10, 30, 0, 20),
@@ -148,43 +68,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                   Expanded(
                     child: Container(
-                      child: currentSeason.when(
-                        data: (animeData) {
-                          List<AnimeModel> animeList =
-                              animeData.map((e) => e).toList();
-                          return ListView.separated(
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(height: 20);
-                            },
-                            itemCount: animeList.length,
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) {
-                              return Row(
-                                children: [
-                                  scrollableCard(context, animeList[index]),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  SizedBox(
-                                    height: 150,
-                                    width: screenWidth * 0.5,
-                                    child: animeInfoCard(
-                                        context, animeList[index]),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        error: (err, stack) {
-                          return Center(child: Text(err.toString()));
-                        },
-                        loading: () {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        },
-                      ),
+                      child: homepageListView(context, currentSeason),
                     ),
                   ),
                 ],

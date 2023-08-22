@@ -2,9 +2,9 @@ import 'package:aniseason/Styles/appcolors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Models/anime_model.dart';
+import '../../../Models/anime_model.dart';
 
-Widget animeInfoCard(BuildContext context, AnimeModel anime) {
+Widget homepageAnimeInfoCard(BuildContext context, AnimeModel anime) {
   double score = anime.score;
   return Column(
     children: [

@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Models/anime_model.dart';
+import '../../../Models/anime_model.dart';
 
-Widget seasonalCard(BuildContext context, AnimeModel anime) {
+Widget seasonsAnimeImageCard(BuildContext context, AnimeModel anime) {
   double screenHeight = MediaQuery.of(context).size.height;
   double screenWidth = MediaQuery.of(context).size.width;
   return GestureDetector(

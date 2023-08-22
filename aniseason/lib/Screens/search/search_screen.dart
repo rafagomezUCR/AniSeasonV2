@@ -1,11 +1,8 @@
+import 'package:aniseason/GeneralWidgets/back_button.dart';
 import 'package:aniseason/Provider/api_service_provider.dart';
-import 'package:aniseason/Widgets/seasonal_card.dart';
+import 'package:aniseason/Screens/search/SearchWidgets/search_anime_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../Models/anime_model.dart';
-import '../../Styles/appcolors.dart';
 
 class SearchedAnime extends ConsumerWidget {
   const SearchedAnime({super.key, required this.searchedAnime});
@@ -15,7 +12,6 @@ class SearchedAnime extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final anime = ref.watch(searchAnimeProvider(searchedAnime));
-    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.fromLTRB(20, 50, 20, 0),
@@ -26,26 +22,7 @@ class SearchedAnime extends ConsumerWidget {
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    style: ButtonStyle(
-                      padding:
-                          MaterialStateProperty.all(const EdgeInsets.all(10)),
-                      shape: MaterialStateProperty.all(const CircleBorder()),
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                        (states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return AppColors.ten;
-                          } else {
-                            return AppColors.thirty;
-                          }
-                        },
-                      ),
-                    ),
-                    child: const Icon(Icons.arrow_back_ios_new),
-                  ),
+                  child: customBackButton(context),
                 ),
                 Container(
                   alignment: Alignment.center,
@@ -63,34 +40,7 @@ class SearchedAnime extends ConsumerWidget {
             ),
             const SizedBox(height: 50),
             Flexible(
-              child: anime.when(
-                data: (animeData) {
-                  List<AnimeModel> animeList = animeData.map((e) => e).toList();
-                  return GridView.builder(
-                    padding: EdgeInsets.zero,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisExtent: screenHeight * 0.3,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 10,
-                    ),
-                    itemBuilder: (context, index) {
-                      return seasonalCard(context, animeList[index]);
-                    },
-                    itemCount: animeList.length,
-                  );
-                },
-                error: (err, stackTrace) {
-                  return Center(
-                    child: Text(err.toString()),
-                  );
-                },
-                loading: () {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              ),
+              child: searchAnimeListView(context, anime),
             ),
           ],
         ),

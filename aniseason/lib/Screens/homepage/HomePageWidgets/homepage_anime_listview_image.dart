@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Models/anime_model.dart';
+import '../../../Models/anime_model.dart';
 
-Widget scrollableCard(BuildContext context, AnimeModel anime) {
+Widget homepageAnimeImageCard(BuildContext context, AnimeModel anime) {
   return Column(
     children: [
       GestureDetector(

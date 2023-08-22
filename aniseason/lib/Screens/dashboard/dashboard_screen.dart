@@ -1,4 +1,4 @@
-import 'package:aniseason/Widgets/bottom_nav_bar.dart';
+import 'package:aniseason/Screens/dashboard/DashBoardWidgets/dashboard_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class DashBoard extends StatefulWidget {

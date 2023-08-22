@@ -1,8 +1,8 @@
 import 'package:aniseason/Styles/appcolors.dart';
-import 'package:aniseason/Widgets/anime_details_image_card.dart';
+import 'package:aniseason/Screens/moreinfo/MoreInfoWidgets/more_info_imagecard.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../GeneralWidgets/back_button.dart';
 import '../../Models/anime_model.dart';
 
 class AnimeInfo extends StatelessWidget {
@@ -23,26 +23,7 @@ class AnimeInfo extends StatelessWidget {
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    style: ButtonStyle(
-                      padding:
-                          MaterialStateProperty.all(const EdgeInsets.all(10)),
-                      shape: MaterialStateProperty.all(const CircleBorder()),
-                      backgroundColor: MaterialStateProperty.resolveWith(
-                        (states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return AppColors.ten;
-                          } else {
-                            return AppColors.thirty;
-                          }
-                        },
-                      ),
-                    ),
-                    child: const Icon(Icons.arrow_back_ios_new),
-                  ),
+                  child: customBackButton(context),
                 ),
                 const Align(
                   alignment: Alignment.center,
@@ -61,7 +42,7 @@ class AnimeInfo extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        animeDetailsCard(context, anime),
+                        moreInfoImageCard(context, anime),
                         Column(
                           children: [
                             Container(
@@ -141,6 +122,14 @@ class AnimeInfo extends StatelessWidget {
                                       Icons.access_time,
                                       color: AppColors.thirty,
                                       size: 30,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(anime.type),
                                     ),
                                   ),
                                   Align(
