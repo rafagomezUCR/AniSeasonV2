@@ -7,6 +7,7 @@ import '../../../Styles/appcolors.dart';
 
 Widget seasonsDropDownMenu(BuildContext context, WidgetRef ref,
     String selectedProvider, List<String> menuList, String dropdowntype) {
+  final double screenHeight = MediaQuery.of(context).size.height;
   List<double> customMenuItemHeights(List<String> items) {
     List<double> itemHeights = [];
     for (var i = 0; i < (items.length * 2) - 1; ++i) {
@@ -50,6 +51,7 @@ Widget seasonsDropDownMenu(BuildContext context, WidgetRef ref,
         borderRadius: BorderRadius.circular(20),
         color: AppColors.thirty,
       ),
+      dropdownMaxHeight: screenHeight * 0.5,
       value: selectedProvider,
       iconEnabledColor: Colors.white,
       dropdownDecoration: BoxDecoration(
