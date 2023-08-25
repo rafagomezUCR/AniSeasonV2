@@ -42,36 +42,41 @@ class _HomePageState extends ConsumerState<HomePage> {
             homepageTextField(context, searchController),
             const SizedBox(height: 10),
             Expanded(
-              child: Column(
-                children: [
-                  const Text(
-                    "TOP ANIME",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: homepageCarouselSlider(context, topAnime),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 30, 0, 20),
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      "Current Season",
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      "TOP ANIME",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: homepageListView(context, currentSeason),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: homepageCarouselSlider(context, topAnime),
                     ),
-                  ),
-                ],
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 30, 0, 20),
+                      alignment: Alignment.centerLeft,
+                      child: const Text(
+                        "Current Season",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: SizedBox(
+                        height: screenHeight * 0.3,
+                        child: homepageListView(context, currentSeason),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
